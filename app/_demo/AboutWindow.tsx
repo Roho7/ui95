@@ -19,7 +19,7 @@ function AboutWindow({ itemCount, ...windowProps }: AboutWindowProps) {
     <Window statusBar={<span>{itemCount} items in the registry</span>} {...windowProps}>
       <div className="flex flex-col gap-4 p-5">
         <Plate variant={"sunken"}>
-          <h1 className="font-pixel text-[44px] leading-tight uppercase md:text-[56px] flex items-baseline">UI<BrandLogo className="h-[27px] mr-3 md:h-[35px] md:mr-4" /></h1>
+          <h1 className="font-pixel text-[44px] leading-tight uppercase md:text-[56px] flex items-baseline">UI<BrandLogo className="h-[27px] mr-3 md:h-[35px] md:mr-4" /><span className="sr-only">95</span></h1>
         </Plate>
         <p className="text-2xl leading-tight mb-6">
           Retro Win95 style components for Shadcn.

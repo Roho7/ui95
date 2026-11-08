@@ -6,7 +6,7 @@ Retro, 1-bit, Win95-flavoured components for shadcn.
 
 ## Documentation
 
-Visit [nostalgui.vercel.app/docs](https://nostalgui.vercel.app/docs) for the guides, and [nostalgui.vercel.app/components](https://nostalgui.vercel.app/components) for every component and variant.
+Visit [www.ui95.dev/docs](https://www.ui95.dev/docs) for the guides, and [www.ui95.dev/components](https://www.ui95.dev/components) for every component and variant.
 
 ## Install
 
@@ -17,7 +17,7 @@ npx shadcn@latest init -b radix
 ```
 
 ```bash
-npx shadcn@latest registry add "@ui95=https://nostalgui.vercel.app/r/{style}/{name}.json"
+npx shadcn@latest registry add "@ui95=https://www.ui95.dev/r/{style}/{name}.json"
 ```
 
 ```bash
@@ -28,7 +28,7 @@ The CLI fills `{style}` from your `components.json`. No icon pack ships with the
 
 ### Sounds
 
-Every button, switch, menu and slider can click like real hardware. Sound is opt-in. The [Sound guide](https://nostalgui.vercel.app/docs/sound) explains how the clicks are made and how to tune them.
+Every button, switch, menu and slider can click like real hardware. Sound is opt-in. The [Sound guide](https://www.ui95.dev/docs/sound) explains how the clicks are made and how to tune them.
 
 ```bash
 npx shadcn@latest add @ui95/sound
@@ -64,7 +64,7 @@ Silence one element with `data-sound="none"`, give it another sound with `data-s
 ### Setup
 
 ```bash
-git clone https://github.com/Roho7/nostalgui.git
+git clone https://github.com/Roho7/ui95.git
 cd ui95
 npm install
 npm run dev

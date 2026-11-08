@@ -22,6 +22,7 @@ import {
 } from "@/components/ui/breadcrumb"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { formatUpdatedAt } from "@/lib/docs/format"
+import { markdownUrl } from "@/lib/docs/llms"
 import { registryDocToMarkdown } from "@/lib/docs/markdown"
 import { findDoc, REGISTRY_DOCS, SECTION_LABELS } from "@/lib/docs/registry-docs"
 import { docHref } from "@/lib/docs/routes"
@@ -44,7 +45,8 @@ export async function generateMetadata({ params }: ItemPageProps): Promise<Metad
   if (!doc) {
     return {}
   }
-  return pageMetadata({ title: doc.title, description: doc.description, path: docHref(doc.name) })
+  const metadata = pageMetadata({ title: doc.title, description: doc.description, path: docHref(doc.name) })
+  return { ...metadata, alternates: { ...metadata.alternates, types: { "text/markdown": markdownUrl(doc.name) } } }
 }
 
 function ItemLinks({ names }: { names: readonly string[] }) {
@@ -75,7 +77,7 @@ function InstallSection({ doc }: { doc: RegistryDoc }) {
             .
           </p>
         </TabsContent>
-        <TabsContent value="manual" className="flex flex-col gap-4">
+        <TabsContent value="manual" forceMount className="flex flex-col gap-4 data-[state=inactive]:hidden">
           {doc.dependencies.length > 0 && (
             <div className="flex flex-col gap-2">
               <p className="text-xl leading-tight">Install the dependencies.</p>
@@ -157,7 +159,7 @@ export default async function ItemPage({ params }: ItemPageProps) {
             <TabsContent value="preview">
               <DemoVariants name={doc.name} />
             </TabsContent>
-            <TabsContent value="code">
+            <TabsContent value="code" forceMount className="data-[state=inactive]:hidden">
               <CodeBlock title={`components/showcase/demos/${doc.name}.tsx`} code={doc.demoSource} />
             </TabsContent>
           </Tabs>

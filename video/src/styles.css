@@ -1,0 +1,34 @@
+@import "../../app/globals.css";
+
+@source "../../components";
+@source "./";
+@source "../../app";
+
+@theme {
+  --breakpoint-sm: 0rem;
+  --breakpoint-md: 0rem;
+  --breakpoint-lg: 0rem;
+  --breakpoint-xl: 0rem;
+  --breakpoint-2xl: 0rem;
+}
+
+[data-world="desktop"] main {
+  height: 1080px !important;
+}
+
+@custom-variant active (&:active, &[data-force-active]);
+
+*,
+*::before,
+*::after {
+  animation: none !important;
+  transition: none !important;
+}
+
+[data-slot="scroll-area-viewport"],
+[data-slot="taskbar-tasks"],
+.overflow-auto,
+.overflow-x-auto,
+.overflow-y-auto {
+  overflow: clip !important;
+}

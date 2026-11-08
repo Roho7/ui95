@@ -1,6 +1,16 @@
 import type { Metadata } from "next"
 
-import { absoluteUrl, SITE_AUTHOR, SITE_DESCRIPTION, SITE_NAME, SITE_URL, SOURCE_URL } from "@/lib/site"
+import {
+  absoluteUrl,
+  AUTHOR_SAME_AS,
+  SITE_AUTHOR,
+  SITE_DESCRIPTION,
+  SITE_KEYWORDS,
+  SITE_NAME,
+  SITE_SAME_AS,
+  SITE_URL,
+  SOURCE_URL,
+} from "@/lib/site"
 
 type PageSeo = {
   title: string
@@ -22,27 +32,43 @@ export function pageMetadata({ title, description, path, type = "article" }: Pag
 
 type JsonLdNode = Record<string, unknown>
 
+const ALTERNATE_NAMES = ["UI95 shadcn registry", "ui95.dev"]
+
+const DISAMBIGUATION =
+  "A shadcn/ui registry of retro React components for Radix projects, built by Roho7. Not the Preact ui95 library or other Windows 95 themes."
+
+const AUTHOR = { "@type": "Person", name: SITE_AUTHOR.name, url: SITE_AUTHOR.url, sameAs: AUTHOR_SAME_AS }
+
 export function websiteJsonLd(): JsonLdNode[] {
   return [
     {
       "@context": "https://schema.org",
       "@type": "WebSite",
+      "@id": `${SITE_URL}/#website`,
       name: SITE_NAME,
+      alternateName: ALTERNATE_NAMES,
       url: SITE_URL,
       description: SITE_DESCRIPTION,
-      author: { "@type": "Person", name: SITE_AUTHOR.name, url: SITE_AUTHOR.url },
+      inLanguage: "en",
+      author: AUTHOR,
     },
     {
       "@context": "https://schema.org",
       "@type": "SoftwareSourceCode",
+      "@id": `${SITE_URL}/#software`,
       name: SITE_NAME,
+      alternateName: ALTERNATE_NAMES,
       description: SITE_DESCRIPTION,
+      disambiguatingDescription: DISAMBIGUATION,
+      keywords: SITE_KEYWORDS.join(", "),
       url: SITE_URL,
+      sameAs: SITE_SAME_AS,
       codeRepository: SOURCE_URL,
       programmingLanguage: ["TypeScript", "React"],
       runtimePlatform: "Next.js",
       license: "https://opensource.org/licenses/MIT",
-      author: { "@type": "Person", name: SITE_AUTHOR.name, url: SITE_AUTHOR.url },
+      isAccessibleForFree: true,
+      author: AUTHOR,
     },
   ]
 }
@@ -64,9 +90,10 @@ export function articleJsonLd({
       description,
       url: absoluteUrl(path),
       ...(updatedAt ? { dateModified: updatedAt } : {}),
-      author: { "@type": "Person", name: SITE_AUTHOR.name, url: SITE_AUTHOR.url },
-      publisher: { "@type": "Organization", name: SITE_NAME, url: SITE_URL },
-      isPartOf: { "@type": "WebSite", name: SITE_NAME, url: SITE_URL },
+      author: AUTHOR,
+      publisher: AUTHOR,
+      isPartOf: { "@type": "WebSite", "@id": `${SITE_URL}/#website`, name: SITE_NAME, url: SITE_URL },
+      about: { "@type": "SoftwareSourceCode", "@id": `${SITE_URL}/#software`, name: SITE_NAME, codeRepository: SOURCE_URL },
     },
     {
       "@context": "https://schema.org",

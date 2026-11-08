@@ -6,12 +6,13 @@ import { JsonLd } from "@/components/docs/JsonLd"
 import { PageHeader } from "@/components/docs/PageHeader"
 import { PageNeighbors } from "@/components/docs/PageNeighbors"
 import { ProseLink } from "@/components/docs/ProseLink"
-import { REGISTRY_URL, RegistrySetup } from "@/components/docs/RegistrySetup"
+import { RegistrySetup } from "@/components/docs/RegistrySetup"
 import { InstallCommand } from "@/components/showcase/InstallCommand"
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
 import { PACKAGE_MANAGERS } from "@/lib/docs/package-managers"
 import { GUIDE_PAGES } from "@/lib/docs/pages"
 import { articleJsonLd, pageMetadata } from "@/lib/seo"
+import { REGISTRY_URL } from "@/lib/site"
 
 const PAGE = GUIDE_PAGES[1]
 

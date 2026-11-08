@@ -1,7 +1,5 @@
 import { CopyCommand } from "@/components/showcase/CopyCommand"
-import { SITE_URL } from "@/lib/site"
-
-const REGISTRY_URL = `${SITE_URL}/r/{style}/{name}.json`
+import { REGISTRY_URL } from "@/lib/site"
 
 function RegistrySetup() {
   return (
@@ -15,4 +13,4 @@ function RegistrySetup() {
   )
 }
 
-export { REGISTRY_URL, RegistrySetup }
+export { RegistrySetup }

@@ -6,6 +6,12 @@
       "runtimeExecutable": "npx",
       "runtimeArgs": ["next", "dev", "-p", "3195"],
       "port": 3195
+    },
+    {
+      "name": "showcase-video",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": ["--prefix", "video", "run", "dev", "--", "--no-open", "--port", "3196"],
+      "port": 3196
     }
   ]
 }
