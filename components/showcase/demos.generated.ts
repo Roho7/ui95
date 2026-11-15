@@ -14,6 +14,7 @@ import { demo as checkboxDemo } from "./demos/checkbox"
 import { demo as collapsibleDemo } from "./demos/collapsible"
 import { demo as commandDemo } from "./demos/command"
 import { demo as contextMenuDemo } from "./demos/context-menu"
+import { demo as crtMonitorDemo } from "./demos/crt-monitor"
 import { demo as crtScreenDemo } from "./demos/crt-screen"
 import { demo as ctaButtonDemo } from "./demos/cta-button"
 import { demo as dialogDemo } from "./demos/dialog"
@@ -88,6 +89,12 @@ export const SHOWCASE_ENTRIES: readonly ShowcaseEntry[] = [
     title: "Rotary knob",
     description: "A matte charcoal plastic knob with a white indicator line over a scale printed on the faceplate, as a skirted knob or a pointer knob. Turn it by dragging, scrolling or with the arrow keys, and it clicks at each tick.",
     demo: rotaryKnobDemo,
+  },
+  {
+    name: "crt-monitor",
+    title: "CRT monitor",
+    description: "A beige monitor housing with a charcoal bezel, a curved CRT screen, a glass reflection, vents, a model badge and a power key. Whatever you put inside runs on the screen.",
+    demo: crtMonitorDemo,
   },
   {
     name: "button",

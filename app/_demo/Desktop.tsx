@@ -281,14 +281,15 @@ function DesktopIcons() {
 
 type DesktopProps = {
   itemCount: number
+  className?: string
 }
 
-function Desktop({ itemCount }: DesktopProps) {
+function Desktop({ itemCount, className }: DesktopProps) {
   const layout = useDesktopLayout()
   const { readWindowProps, readTaskButtons } = useDesktopWindows(layout)
   const { errors, spawnErrors, dismissError } = useErrorStack()
   return (
-    <main className="relative h-svh w-full overflow-hidden bg-desktop">
+    <main className={cn("relative h-svh w-full overflow-hidden bg-desktop", className)}>
       <Wallpaper />
       <div className="relative h-full px-4 pt-4 pb-24">
         <DesktopIcons />
