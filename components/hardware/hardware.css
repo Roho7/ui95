@@ -1,0 +1,201 @@
+:where([data-hw]):not(:where([data-hw] [data-hw])) {
+  --hw-body: #d8d0bd;
+  --hw-body-hi: #efe9dc;
+  --hw-body-lo: #b3a993;
+  --hw-seam: #9d937d;
+  --hw-recess: #1f1e1c;
+  --hw-recess-hi: #3b3936;
+  --hw-legend: #2b2722;
+  --hw-red: #c4472f;
+  --hw-red-lit: #ff7452;
+  --hw-amber: #d39a33;
+  --hw-amber-lit: #ffc865;
+  --hw-green: #5fae72;
+  --hw-green-lit: #a6f5b4;
+  --hw-slate: #5d6977;
+  --hw-shadow-tint: 46 36 24;
+  --hw-font: "DIN Condensed", "DIN Alternate", "Roboto Condensed", "Arial Narrow", "Helvetica Neue", Helvetica, sans-serif;
+  --hw-grain: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' seed='4'/%3E%3CfeColorMatrix values='0 0 0 0 0.42 0 0 0 0 0.37 0 0 0 0 0.3 0 0 0 0.22 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23g)'/%3E%3C/svg%3E");
+  --hw-bevel-raised: inset 1.5px 1.5px 0 var(--hw-body-hi), inset -1.5px -1.5px 0 var(--hw-body-lo), inset 0 0 0 1px rgb(var(--hw-shadow-tint) / 0.12);
+  --hw-bevel-recess: inset 2px 2px 5px rgb(0 0 0 / 0.55), inset -1px -1px 0 rgb(255 255 255 / 0.07);
+  --hw-shadow-ambient: 0 1px 1px rgb(var(--hw-shadow-tint) / 0.18), 0 8px 16px -6px rgb(var(--hw-shadow-tint) / 0.3), 0 22px 40px -16px rgb(var(--hw-shadow-tint) / 0.35);
+  --hw-shadow-part: 1px 2px 2px rgb(var(--hw-shadow-tint) / 0.45), 3px 7px 10px -3px rgb(var(--hw-shadow-tint) / 0.35);
+  font-family: var(--hw-font);
+  color: var(--hw-legend);
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+[data-hw] [data-part="legend"] {
+  font-family: var(--hw-font);
+  font-size: 11px;
+  font-weight: 700;
+  font-stretch: condensed;
+  letter-spacing: 0.08em;
+  line-height: 1;
+  text-transform: uppercase;
+  color: var(--hw-legend);
+  white-space: nowrap;
+  opacity: 0.92;
+}
+
+[data-hw] [data-part="legend"][data-size="sm"] {
+  font-size: 9px;
+}
+
+[data-hw] [data-part="legend"][data-size="lg"] {
+  font-size: 18px;
+  letter-spacing: 0.04em;
+}
+
+[data-part="faceplate"] {
+  position: relative;
+  isolation: isolate;
+  padding: 30px 34px;
+  border-radius: 16px;
+  background: var(--hw-grain), linear-gradient(160deg, var(--hw-body-hi) -30%, var(--hw-body) 35%, var(--hw-body) 70%, var(--hw-body-lo) 140%);
+  background-blend-mode: multiply, normal;
+  box-shadow: var(--hw-bevel-raised), var(--hw-shadow-ambient);
+}
+
+[data-part="faceplate"]::before {
+  content: "";
+  position: absolute;
+  inset: 7px;
+  z-index: -1;
+  border-radius: 11px;
+  pointer-events: none;
+  box-shadow:
+    inset 1px 1px 0 rgb(var(--hw-shadow-tint) / 0.32),
+    1px 1px 0 var(--hw-body-hi);
+}
+
+[data-part="faceplate"][data-finish="cream"] {
+  --hw-body: #e9e2d0;
+  --hw-body-hi: #f9f5eb;
+  --hw-body-lo: #c6bca6;
+  --hw-seam: #b0a68f;
+}
+
+[data-part="faceplate"][data-finish="khaki"] {
+  --hw-body: #c8c09e;
+  --hw-body-hi: #e1dbbe;
+  --hw-body-lo: #a29a76;
+  --hw-seam: #8f876a;
+}
+
+[data-part="screw"] {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 38% 34%, #8a857c, #5d5952 60%, #45423d);
+  box-shadow:
+    inset 0 0 0 1px rgb(0 0 0 / 0.25),
+    1px 1px 0 var(--hw-body-hi),
+    -0.5px -0.5px 0 rgb(var(--hw-shadow-tint) / 0.35);
+}
+
+[data-part="screw"]::before {
+  content: "";
+  position: absolute;
+  inset: 4px 1.5px;
+  border-radius: 1px;
+  background: #2b2925;
+  box-shadow: 0 0.5px 0 rgb(255 255 255 / 0.18);
+  transform: rotate(var(--hw-screw-turn));
+}
+
+[data-part="screw"][data-corner="top-left"] {
+  top: 13px;
+  left: 13px;
+  --hw-screw-turn: 17deg;
+}
+
+[data-part="screw"][data-corner="top-right"] {
+  top: 13px;
+  right: 13px;
+  --hw-screw-turn: -32deg;
+}
+
+[data-part="screw"][data-corner="bottom-left"] {
+  bottom: 13px;
+  left: 13px;
+  --hw-screw-turn: 61deg;
+}
+
+[data-part="screw"][data-corner="bottom-right"] {
+  bottom: 13px;
+  right: 13px;
+  --hw-screw-turn: 4deg;
+}
+
+[data-part="lamp"] {
+  --hw-lamp: var(--hw-red);
+  --hw-lamp-lit: var(--hw-red-lit);
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  vertical-align: middle;
+}
+
+[data-part="lamp"][data-tone="amber"] {
+  --hw-lamp: var(--hw-amber);
+  --hw-lamp-lit: var(--hw-amber-lit);
+}
+
+[data-part="lamp"][data-tone="green"] {
+  --hw-lamp: var(--hw-green);
+  --hw-lamp-lit: var(--hw-green-lit);
+}
+
+[data-part="lamp-bezel"] {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background:
+    repeating-conic-gradient(rgb(255 255 255 / 0.05) 0deg 6deg, rgb(0 0 0 / 0.12) 6deg 12deg),
+    radial-gradient(circle at 36% 30%, var(--hw-recess-hi), var(--hw-recess) 70%);
+  box-shadow: inset 1px 1px 0 rgb(255 255 255 / 0.12), inset -1px -1px 1px rgb(0 0 0 / 0.5), var(--hw-shadow-part);
+}
+
+[data-part="lamp-lens"] {
+  position: relative;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background:
+    radial-gradient(ellipse 45% 30% at 38% 26%, rgb(255 255 255 / 0.32), rgb(255 255 255 / 0) 100%),
+    radial-gradient(circle at 50% 58%, color-mix(in oklab, var(--hw-lamp) 55%, #2a1d14), color-mix(in oklab, var(--hw-lamp) 25%, #120c08) 85%);
+  box-shadow: inset 0 1px 3px rgb(0 0 0 / 0.6), 0 0 0 1px rgb(0 0 0 / 0.55);
+  transition: background 50ms linear, box-shadow 50ms linear;
+}
+
+[data-part="lamp"][data-on] [data-part="lamp-lens"] {
+  background:
+    radial-gradient(ellipse 45% 30% at 38% 26%, rgb(255 255 255 / 0.5), rgb(255 255 255 / 0) 100%),
+    radial-gradient(circle at 50% 55%, color-mix(in oklab, var(--hw-lamp-lit) 55%, #fff4dc) 0 20%, var(--hw-lamp-lit) 52%, var(--hw-lamp) 100%);
+  box-shadow:
+    inset 0 -1px 2px rgb(0 0 0 / 0.25),
+    0 0 0 1px rgb(0 0 0 / 0.45),
+    0 0 4px 1px color-mix(in oklab, var(--hw-lamp-lit) 55%, transparent);
+}
+
+[data-part="lamp"][data-on] [data-part="lamp-bezel"] {
+  box-shadow:
+    inset 1px 1px 0 rgb(255 255 255 / 0.12),
+    inset -1px -1px 1px rgb(0 0 0 / 0.5),
+    var(--hw-shadow-part),
+    0 0 14px 4px color-mix(in oklab, var(--hw-lamp-lit) 32%, transparent),
+    0 0 34px 12px color-mix(in oklab, var(--hw-lamp-lit) 14%, transparent);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  [data-part="lamp-lens"] {
+    transition: none;
+  }
+}

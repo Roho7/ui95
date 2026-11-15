@@ -88,16 +88,18 @@ Shipped components with no shadcn counterpart.
 - [x] highlighted-text
 - [x] crt-screen
 
-## Special components
+## Hardware95
 
-Hardware-flavoured components to build later. Each is its own design exercise: a prototype before the real build, stepped motion, the four inks only.
+Realistic retro hardware in matte beige-box plastic: one light source, soft shadows, travel and detent clicks. Hardware95 parts carry scoped tokens, depend on `hardware` and never on `theme`. See [`docs/DESIGN.md`](docs/DESIGN.md#hardware95).
 
+- [x] hardware: plastic faceplate finishes, printed legends, a pilot lamp and the shared tokens
+- [ ] rotary-knob: a charcoal skirted or pointer knob over a printed scale
+- [ ] rotary-dial: a rotating stepped selector, a knob with detents
+- [ ] lever-switch: a bat-handle toggle with an optional safety cover
+- [ ] radial-meter: a VU meter whose needle swings and settles
+- [ ] segment-display: a seven-segment readout behind a smoked window
+- [ ] tape-buttons: piano-key transport keys that latch and pop each other up
+- [ ] red-button: a big red button under a hinged guard
 - [ ] crt-player: a CRT TV video player
 - [ ] pov-keyboard: a POV mechanical keyboard with a dithered hand that types as you type on the keys
 - [ ] hold-to-speak: a hold to speak component
-- [ ] rotary-dial: a rotating dial component
-- [ ] lever-switch: a lever switch
-- [ ] radial-meter: a radial meter, like a speedometer
-- [ ] red-button: a big red button
-- [ ] radio-buttons: real radio buttons, the mechanical kind
-- [ ] tape-buttons: real tape deck press buttons
