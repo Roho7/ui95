@@ -690,6 +690,32 @@
       }
     },
     {
+      "name": "crt-monitor",
+      "type": "registry:ui",
+      "title": "CRT monitor",
+      "description": "A beige monitor housing with a charcoal bezel, a curved CRT screen, a glass reflection, vents, a model badge and a power key. Whatever you put inside runs on the screen.",
+      "docs": "Render any content as children; it runs inside the CRT effect from crt-screen. on and onPowerChange control it, or pass defaultOn={false} to start dark. brightness (0.4 to 1.4) and curvature set the picture. Put knobs or lamps in the controls slot and they sit in the chin next to the power key. Turning it on plays a short warm-up that reduced motion skips.",
+      "categories": [
+        "hardware"
+      ],
+      "registryDependencies": [
+        "@ui95/hardware",
+        "@ui95/crt-screen"
+      ],
+      "files": [
+        {
+          "path": "components/hardware/crt-monitor.css",
+          "type": "registry:component",
+          "target": "@components/hardware/crt-monitor.css"
+        },
+        {
+          "path": "components/hardware/crt-monitor.tsx",
+          "type": "registry:component",
+          "target": "@components/hardware/crt-monitor.tsx"
+        }
+      ]
+    },
+    {
       "name": "button",
       "type": "registry:ui",
       "title": "Button",

@@ -1,6 +1,6 @@
 import { join } from "node:path"
 
-const WIN95_CHROME = '[data-slot="taskbar"], [data-slot="menubar"], [data-slot="crt-screen"], [data-slot="window"]'
+const WIN95_CHROME = '[data-slot="taskbar"], [data-slot="menubar"], [data-slot="crt-screen"][data-fullscreen], [data-slot="window"]'
 
 export default async function verifyHardwareChrome({ page, baseUrl, evidenceDir, expect }) {
   await page.goto(`${baseUrl}/components/rotary-knob`, { waitUntil: "networkidle" })
@@ -13,7 +13,9 @@ export default async function verifyHardwareChrome({ page, baseUrl, evidenceDir,
   expect("/components/hardware redirects to /hardware/hardware", new URL(page.url()).pathname === "/hardware/hardware", page.url())
 
   await page.goto(`${baseUrl}/hardware`, { waitUntil: "networkidle" })
-  expect("the catalogue shows one tile per Hardware95 part", (await page.locator('[data-part="hw-tile"]').count()) === 2)
+  const registry = await (await page.request.get(`${baseUrl}/r/registry.json`)).json()
+  const partCount = registry.items.filter((item) => item.categories?.includes("hardware")).length
+  expect("the catalogue shows one tile per Hardware95 part", (await page.locator('[data-part="hw-tile"]').count()) === partCount, String(partCount))
   expect("the catalogue renders no Win95 chrome", (await page.locator(WIN95_CHROME).count()) === 0)
   expect("the catalogue sits in the Hardware95 shell with the Parts key lit", (await page.locator('[data-part="hw-site"] [data-part="hw-masthead"]').count()) === 1 && (await page.locator('[data-part="hw-nav"] a[aria-current="page"]').textContent())?.trim() === "Parts")
   const headingFont = await page.locator("h1").evaluate((element) => getComputedStyle(element).fontFamily)
