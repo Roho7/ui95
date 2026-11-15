@@ -1,15 +1,12 @@
 import type { Metadata } from "next"
 
-import { CodeBlock } from "@/components/docs/CodeBlock"
-import { DocSection } from "@/components/docs/DocSection"
+import { InstallCommand } from "@/components/chrome/manual/InstallCommand"
+import { Code, CodeBlock, DocSection, PageHeader, PageNeighbors, Prose } from "@/components/chrome/manual/parts"
 import { JsonLd } from "@/components/docs/JsonLd"
-import { PageHeader } from "@/components/docs/PageHeader"
-import { PageNeighbors } from "@/components/docs/PageNeighbors"
-import { InstallCommand } from "@/components/showcase/InstallCommand"
-import { GUIDE_PAGES } from "@/lib/docs/pages"
+import { GUIDE } from "@/lib/docs/pages"
 import { articleJsonLd, pageMetadata } from "@/lib/seo"
 
-const PAGE = GUIDE_PAGES[3]
+const PAGE = GUIDE.sound
 
 export const metadata: Metadata = pageMetadata({ title: PAGE.title, description: PAGE.description, path: PAGE.href })
 
@@ -61,18 +58,6 @@ const SILENCE_SNIPPET = `{
 const OVERRIDE_SNIPPET = `<Button data-sound="none">Quiet</Button>
 <Button data-sound="keycap">Clacky</Button>`
 
-function Prose({ children }: { children: React.ReactNode }) {
-  return <p className="max-w-3xl text-xl leading-tight">{children}</p>
-}
-
-function Code({ children }: { children: React.ReactNode }) {
-  return <code className="bg-well px-1 text-well-foreground">{children}</code>
-}
-
-function Subheading({ children }: { children: React.ReactNode }) {
-  return <h3 className="font-pixel text-[16px] leading-none uppercase">{children}</h3>
-}
-
 export default function SoundPage() {
   return (
     <>
@@ -111,7 +96,7 @@ export default function SoundPage() {
         </Prose>
         <CodeBlock title="Terminal" code="node scripts/95-sound-lib.mjs sync" />
       </DocSection>
-      <DocSection id="how-sound-works" title="How a click is made" >
+      <DocSection id="how-sound-works" title="How a click is made">
         <Prose>
           There are no audio files to download. Each sound is a short recipe in{" "}
           <Code>sounds.json</Code>, and the browser builds it into sound the first time it plays.
