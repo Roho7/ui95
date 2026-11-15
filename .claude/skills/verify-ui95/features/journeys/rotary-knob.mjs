@@ -31,8 +31,8 @@ export default async function verifyRotaryKnob({ page, baseUrl, evidenceDir, exp
       return start.apply(this, args)
     }
   })
-  await page.goto(`${baseUrl}/components`, { waitUntil: "networkidle" })
-  const card = page.locator("#rotary-knob")
+  await page.goto(`${baseUrl}/hardware/rotary-knob`, { waitUntil: "networkidle" })
+  const card = page.locator('[data-part="hw-bench"]')
   await card.scrollIntoViewIfNeeded()
   const volume = card.getByRole("slider", { name: "Volume" })
   expect("volume knob starts at 62", (await readKnob(volume)).value === 62)

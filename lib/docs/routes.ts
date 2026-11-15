@@ -1,3 +1,5 @@
+import { findDoc } from "./registry-docs"
+
 export function docHref(name: string): string {
-  return `/components/${name}`
+  return findDoc(name)?.library === "hardware95" ? `/hardware/${name}` : `/components/${name}`
 }

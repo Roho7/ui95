@@ -161,4 +161,6 @@ Hardware95 is the line of realistic retro hardware parts. The rules above are fo
 - **Physical motion.** A part moves the way the real part does. A knob follows the pointer with no easing, a key travels down and springs back, and a lamp switches on at once and blooms.
 - **Plain CSS.** Each part's styles live in a CSS file next to it, targeted by `data-part` attributes. Layout classes in demos are fine.
 
+Hardware95 docs pages live in `app/(hardware)` and render in the beige chrome from `components/chrome/hardware`, never in the Win95 program window. `check-style.mjs` fails if those files import Win95 code (`components/ui`, `components/retro`, `app/_site` or the Win95 docs widgets).
+
 `scripts/check-style.mjs` skips the classic class rules for `components/hardware/` and for the demos of `hardware`-category items. It requires every Hardware95 item to depend on `@ui95/hardware`, never on `@ui95/theme`, and never on `radix-ui`.

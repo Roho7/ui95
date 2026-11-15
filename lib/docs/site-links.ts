@@ -7,4 +7,5 @@ export const SITE_LINKS: readonly SiteLink[] = [
   { href: "/docs", label: "Docs" },
   { href: "/components", label: "Components" },
   { href: "/", label: "Desktop" },
+  { href: "/hardware", label: "Hardware95" },
 ]

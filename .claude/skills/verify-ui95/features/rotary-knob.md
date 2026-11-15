@@ -13,8 +13,8 @@
 
 ## How to get to it (user POV)
 
-- `/components`, card `Rotary knob` (`#rotary-knob`): skirted knobs on putty (Volume drives the Clip lamp), pointer knobs on khaki, and coloured caps, a stepped and a disabled knob on cream.
-- `/components/rotary-knob`, the same demo on its docs page.
+- `/hardware/rotary-knob`, the bench (`[data-part="hw-bench"]`): skirted knobs on putty (Volume drives the Clip lamp), pointer knobs on khaki, and coloured caps, a stepped and a disabled knob on cream.
+- `/components/rotary-knob` redirects there, and `/hardware` shows the first variant as a tile.
 
 ## Driving it with dither.mjs
 

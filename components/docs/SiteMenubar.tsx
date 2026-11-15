@@ -12,7 +12,7 @@ import {
   MenubarSubTrigger,
   MenubarTrigger,
 } from "@/components/ui/menubar"
-import type { DocGroup } from "@/lib/docs/pages"
+import { type DocGroup, HARDWARE_DOC_GROUP } from "@/lib/docs/pages"
 import { SOURCE_URL } from "@/lib/site"
 
 type SiteMenubarProps = {
@@ -51,6 +51,20 @@ function SiteMenubar({ guides, sections }: SiteMenubarProps) {
                 ))}
               </MenubarSubContent>
             </MenubarSub>
+          ))}
+        </MenubarContent>
+      </MenubarMenu>
+      <MenubarMenu>
+        <MenubarTrigger>Hardware95</MenubarTrigger>
+        <MenubarContent>
+          <MenubarItem asChild>
+            <Link href="/hardware">All parts</Link>
+          </MenubarItem>
+          <MenubarSeparator />
+          {HARDWARE_DOC_GROUP.pages.map((page) => (
+            <MenubarItem key={page.href} asChild>
+              <Link href={page.href}>{page.title}</Link>
+            </MenubarItem>
           ))}
         </MenubarContent>
       </MenubarMenu>

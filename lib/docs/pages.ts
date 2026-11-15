@@ -1,4 +1,4 @@
-import { listDocsInSection, SECTION_LABELS, SECTION_ORDER } from "./registry-docs"
+import { HARDWARE_DOCS, listDocsInSection, SECTION_LABELS, SECTION_ORDER } from "./registry-docs"
 import { docHref } from "./routes"
 
 export type DocPage = {
@@ -36,7 +36,7 @@ export const GUIDE_PAGES: DocPage[] = [
   },
 ]
 
-export const DOC_GROUPS: DocGroup[] = [
+export const UI95_DOC_GROUPS: DocGroup[] = [
   { label: "Getting started", isCounted: false, pages: GUIDE_PAGES },
   ...SECTION_ORDER.map((section) => ({
     label: SECTION_LABELS[section],
@@ -49,7 +49,15 @@ export const DOC_GROUPS: DocGroup[] = [
   })),
 ]
 
-export const DOC_PAGES: DocPage[] = DOC_GROUPS.flatMap((group) => group.pages)
+export const HARDWARE_DOC_GROUP: DocGroup = {
+  label: SECTION_LABELS.hardware,
+  isCounted: true,
+  pages: HARDWARE_DOCS.map((doc) => ({ href: docHref(doc.name), title: doc.title, description: doc.description })),
+}
+
+export const DOC_GROUPS: DocGroup[] = [UI95_DOC_GROUPS[0], HARDWARE_DOC_GROUP, ...UI95_DOC_GROUPS.slice(1)]
+
+export const DOC_PAGES: DocPage[] = UI95_DOC_GROUPS.flatMap((group) => group.pages)
 
 export function findNeighbors(href: string): { previous: DocPage | null; next: DocPage | null } {
   const index = DOC_PAGES.findIndex((page) => page.href === href)

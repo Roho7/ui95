@@ -14,8 +14,11 @@ import {
 
 const COMPONENT_PREFIX = "/components/"
 
+const DOC_PREFIXES = [COMPONENT_PREFIX, "/hardware/"]
+
 function docForHref(href: string): RegistryDoc | undefined {
-  return href.startsWith(COMPONENT_PREFIX) ? findDoc(href.slice(COMPONENT_PREFIX.length)) : undefined
+  const prefix = DOC_PREFIXES.find((candidate) => href.startsWith(candidate))
+  return prefix ? findDoc(href.slice(prefix.length)) : undefined
 }
 
 export function markdownUrl(name: string): string {
