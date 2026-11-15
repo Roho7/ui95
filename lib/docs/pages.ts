@@ -13,28 +13,37 @@ export type DocGroup = {
   pages: DocPage[]
 }
 
-export const GUIDE_PAGES: DocPage[] = [
-  {
+export const GUIDE = {
+  system: {
     href: "/docs",
-    title: "Introduction",
+    title: "The system",
+    description: "Hardware95 is the machine, UI95 is the software on its screen, and both install from one registry.",
+  },
+  about: {
+    href: "/ui/about",
+    title: "About UI95",
     description: "What UI95 is and how a component page is organised.",
   },
-  {
+  installation: {
     href: "/docs/installation",
     title: "Installation",
-    description: "How to make your app look like this.",
+    description: "Register the namespace once, then add UI95 components, Hardware95 parts or both.",
   },
-  {
+  theming: {
     href: "/ui/theming",
     title: "Theming",
     description: "There are different kinds of retro vibes.",
   },
-  {
+  sound: {
     href: "/docs/sound",
     title: "Sound",
     description: "Synthesized clicks for every control, and how to add them.",
   },
-]
+} as const satisfies Record<string, DocPage>
+
+export const GUIDE_PAGES: DocPage[] = [GUIDE.about, GUIDE.installation, GUIDE.theming, GUIDE.sound]
+
+export const MANUAL_PAGES: DocPage[] = [GUIDE.system, GUIDE.installation, GUIDE.sound]
 
 export const UI95_DOC_GROUPS: DocGroup[] = [
   { label: "Getting started", isCounted: false, pages: GUIDE_PAGES },

@@ -12,7 +12,7 @@ import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible"
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
-import { GUIDE_PAGES } from "@/lib/docs/pages"
+import { GUIDE } from "@/lib/docs/pages"
 import { docHref } from "@/lib/docs/routes"
 import {
   PALETTE_INK_NAMES,
@@ -26,7 +26,7 @@ import {
 } from "@/lib/docs/theme"
 import { articleJsonLd, pageMetadata } from "@/lib/seo"
 
-const PAGE = GUIDE_PAGES[2]
+const PAGE = GUIDE.theming
 const USED_BY_LIMIT = 5
 
 export const metadata: Metadata = pageMetadata({ title: PAGE.title, description: PAGE.description, path: PAGE.href })
