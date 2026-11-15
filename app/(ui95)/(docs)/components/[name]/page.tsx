@@ -36,7 +36,7 @@ type ItemPageProps = {
 export const dynamicParams = false
 
 export function generateStaticParams() {
-  return REGISTRY_DOCS.map((doc) => ({ name: doc.name }))
+  return REGISTRY_DOCS.filter((doc) => doc.library !== "hardware95").map((doc) => ({ name: doc.name }))
 }
 
 export async function generateMetadata({ params }: ItemPageProps): Promise<Metadata> {

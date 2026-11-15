@@ -1,7 +1,11 @@
 "use client"
 
-import { SHOWCASE_ENTRIES } from "./demos.generated"
+import { findDoc } from "@/lib/docs/registry-docs"
+
+import { SHOWCASE_ENTRIES as ALL_ENTRIES } from "./demos.generated"
 import { ShowcaseCard } from "./ShowcaseCard"
+
+const SHOWCASE_ENTRIES = ALL_ENTRIES.filter((entry) => findDoc(entry.name)?.library !== "hardware95")
 
 const VARIANT_COUNT = SHOWCASE_ENTRIES.reduce(
   (total, entry) => total + entry.demo.variants.length,

@@ -10,7 +10,9 @@ export const SECTION_LABELS: Record<DocSection, string> = {
   utilities: "Utilities",
 }
 
-export const SECTION_ORDER: readonly DocSection[] = ["hardware", "components", "blocks", "utilities"]
+export const SECTION_ORDER: readonly DocSection[] = ["components", "blocks", "utilities"]
+
+export const HARDWARE_DOCS: readonly RegistryDoc[] = REGISTRY_DOCS.filter((doc) => doc.library === "hardware95")
 
 const DOCS_BY_NAME = new Map(REGISTRY_DOCS.map((doc) => [doc.name, doc]))
 

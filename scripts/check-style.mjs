@@ -230,8 +230,21 @@ function findRoadmapViolations() {
   return violations
 }
 
+const HARDWARE_CHROME_DIRS = ["app/(hardware)/", "components/chrome/hardware/"]
+const HARDWARE_CHROME_BLOCKED = ["@/components/ui/", "@/components/retro/", "@/app/_", "@/components/showcase/", "@/components/docs/"]
+const HARDWARE_CHROME_ALLOWED = new Set(["@/components/showcase/demos.generated", "@/components/docs/use-package-manager", "@/components/docs/JsonLd"])
+
+function findHardwareChromeViolations(file, text) {
+  if (!HARDWARE_CHROME_DIRS.some((directory) => file.startsWith(directory))) {
+    return []
+  }
+  return listImports(text)
+    .filter((specifier) => HARDWARE_CHROME_BLOCKED.some((prefix) => specifier.startsWith(prefix)) && !HARDWARE_CHROME_ALLOWED.has(specifier))
+    .map((specifier) => ({ path: file, line: 0, rule: "hardware-chrome-skips-win95", found: specifier, why: "Hardware95 pages never render Win95 chrome or primitives; use components/hardware and components/chrome/hardware" }))
+}
+
 function isHardwareFile(file) {
-  if (file.startsWith(HARDWARE_DIR)) {
+  if (file.startsWith(HARDWARE_DIR) || HARDWARE_CHROME_DIRS.some((directory) => file.startsWith(directory))) {
     return true
   }
   const demo = file.startsWith(DEMOS_DIR) ? file.slice(DEMOS_DIR.length).replace(/\.tsx$/, "") : null
@@ -257,6 +270,7 @@ function checkStyle() {
       const file = relative(ROOT, path)
       violations.push(...findComments(file, text))
       violations.push(...findArrowViolations(file, text))
+      violations.push(...findHardwareChromeViolations(file, text))
       if ((file.startsWith("components/") || file.startsWith("app/")) && !isHardwareFile(file)) {
         violations.push(...findClassViolations(file, text))
       }
