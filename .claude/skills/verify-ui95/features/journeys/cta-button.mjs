@@ -8,8 +8,8 @@ async function readWalls(button) {
 }
 
 export default async function verifyCtaButton({ page, baseUrl, evidenceDir, expect }) {
-  await page.goto(`${baseUrl}/components`, { waitUntil: "networkidle" })
-  const card = page.locator("article#cta-button")
+  await page.goto(`${baseUrl}/ui`, { waitUntil: "networkidle" })
+  const card = page.locator("#cta-button")
   await card.scrollIntoViewIfNeeded()
   const button = card.getByRole("button", { name: "Get UI95" })
   const box = await button.boundingBox()

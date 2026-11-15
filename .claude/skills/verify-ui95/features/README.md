@@ -26,10 +26,11 @@ This directory is the maintained source for verifying the user-facing behavior o
 
 | Feature | File | Proof command |
 |---|---|---|
-| Component catalogue (`/components`) | [showcase-catalogue.md](showcase-catalogue.md) | `audit` |
+| Component catalogue (`/ui`) | [showcase-catalogue.md](showcase-catalogue.md) | `audit` |
 | Themes and palettes | [theme-switching.md](theme-switching.md) | `audit` |
 | Rotary knob (Hardware95) | [rotary-knob.md](rotary-knob.md) | `journey rotary-knob` |
 | Hardware95 chrome and the library split | [hardware-chrome.md](hardware-chrome.md) | `journey hardware-chrome` |
+| Legacy URL redirects | [legacy-urls.md](legacy-urls.md) | `journey legacy-urls` |
 | CTA keycap button | [cta-button.md](cta-button.md) | `journey cta-button` |
 | Retro desktop landing (`/`) | [retro-desktop.md](retro-desktop.md) | `journey desktop` |
 | Registry install | [registry-install.md](registry-install.md) | `shadcn view` / `add` in a scratch project |

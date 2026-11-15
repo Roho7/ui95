@@ -24,10 +24,10 @@ const THEMES = PALETTES.flatMap(({ slug, label }) => [
 const ROUTES = [
   { path: "/", minWidth: 0, label: "home", hasCells: false },
   { path: "/docs", minWidth: 0, label: "docs", hasCells: false },
-  { path: "/components", minWidth: 0, label: "components", hasCells: true },
-  { path: "/components/button", minWidth: 0, label: "button", hasCells: true },
-  { path: "/components/window", minWidth: 0, label: "window", hasCells: true },
-  { path: "/components/pixel-glyphs", minWidth: 0, label: "pixel-glyphs", hasCells: false },
+  { path: "/ui", minWidth: 0, label: "components", hasCells: true },
+  { path: "/ui/button", minWidth: 0, label: "button", hasCells: true },
+  { path: "/ui/window", minWidth: 0, label: "window", hasCells: true },
+  { path: "/ui/pixel-glyphs", minWidth: 0, label: "pixel-glyphs", hasCells: false },
 ]
 
 function readPortOwnerDirectory() {
@@ -54,12 +54,12 @@ async function fetchStatus(path) {
 
 async function runDoctor() {
   const owner = readPortOwnerDirectory()
-  const components = await fetchStatus("/components")
+  const components = await fetchStatus("/ui")
   const registryItem = await fetchStatus("/r/button.json")
   const checks = [
     { name: `port ${PORT} is listening`, isOk: owner !== null, detail: owner ? `pid ${owner.pid}` : "nothing listening; run up" },
     { name: "port owner runs from this repo", isOk: owner !== null && owner.cwd === ROOT, detail: owner?.cwd ?? "" },
-    { name: "/components renders the catalogue", isOk: components.status === 200 && components.body.includes("Components / UI95") && components.body.includes('id="button"'), detail: `HTTP ${components.status}` },
+    { name: "/ui renders the catalogue", isOk: components.status === 200 && components.body.includes("Components / UI95") && components.body.includes('id="button"'), detail: `HTTP ${components.status}` },
     { name: "registry serves /r/button.json", isOk: registryItem.status === 200 && registryItem.body.includes('"name": "button"'), detail: `HTTP ${registryItem.status}` },
     { name: "Google Chrome is installed", isOk: existsSync("/Applications/Google Chrome.app"), detail: "playwright-core drives the installed Chrome" },
   ]
@@ -74,7 +74,7 @@ async function runDoctor() {
 async function waitForReady(timeoutMs) {
   const deadline = Date.now() + timeoutMs
   while (Date.now() < deadline) {
-    const page = await fetchStatus("/components")
+    const page = await fetchStatus("/ui")
     if (page.status === 200 && page.body.includes('id="button"')) {
       return true
     }

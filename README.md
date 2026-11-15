@@ -70,7 +70,7 @@ npm install
 npm run dev
 ```
 
-The desktop is at `/`, the catalogue at `/components` and the docs at `/docs`.
+The desktop is at `/`, the UI95 catalogue at `/ui`, Hardware95 at `/hardware` and the docs at `/docs`.
 
 ### Add a component
 

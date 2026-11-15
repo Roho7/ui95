@@ -70,10 +70,10 @@ export default function IntroductionPage() {
             <ProseLink href="/docs/installation">Installation</ProseLink>
           </li>
           <li>
-            <ProseLink href="/docs/theming">Theming</ProseLink>
+            <ProseLink href="/ui/theming">Theming</ProseLink>
           </li>
           <li>
-            <ProseLink href="/components">Browse components</ProseLink>
+            <ProseLink href="/ui">Browse components</ProseLink>
           </li>
           <li>
             <ProseLink href="/">Boot the desktop</ProseLink>

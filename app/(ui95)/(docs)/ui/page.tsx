@@ -8,7 +8,7 @@ import { pageMetadata } from "@/lib/seo"
 export const metadata: Metadata = pageMetadata({
   title: "Components",
   description: "Every UI95 registry component and variant, ready to install with shadcn.",
-  path: "/components",
+  path: "/ui",
   type: "website",
 })
 

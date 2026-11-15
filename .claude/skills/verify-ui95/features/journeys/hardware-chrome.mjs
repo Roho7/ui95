@@ -22,7 +22,7 @@ export default async function verifyHardwareChrome({ page, baseUrl, evidenceDir,
   expect("the catalogue renders no Win95 chrome", (await page.locator(WIN95_CHROME).count()) === 0)
   await page.screenshot({ path: join(evidenceDir, "catalogue.png") })
 
-  await page.goto(`${baseUrl}/components/button`, { waitUntil: "networkidle" })
+  await page.goto(`${baseUrl}/ui/button`, { waitUntil: "networkidle" })
   const sidebar = page.locator("aside")
   expect("the UI95 sidebar no longer lists Hardware95 parts", (await sidebar.getByText("Rotary knob", { exact: true }).count()) === 0)
   await page.getByRole("menuitem", { name: "Hardware95" }).click()
@@ -30,7 +30,7 @@ export default async function verifyHardwareChrome({ page, baseUrl, evidenceDir,
   expect("the UI95 menubar has a Hardware95 menu that links to /hardware", (await allParts.getAttribute("href")) === "/hardware")
   await page.keyboard.press("Escape")
 
-  await page.goto(`${baseUrl}/components`, { waitUntil: "networkidle" })
+  await page.goto(`${baseUrl}/ui`, { waitUntil: "networkidle" })
   expect("the UI95 catalogue no longer shows Hardware95 cards", (await page.locator("#rotary-knob, #hardware").count()) === 0)
 
   const llms = await (await page.request.get(`${baseUrl}/llms.txt`)).text()

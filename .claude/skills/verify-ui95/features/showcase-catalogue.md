@@ -1,6 +1,6 @@
 # Component catalogue
 
-`/components` shows every `registry:ui` and `registry:block` item from `registry.json` as a card in a bento grid: title, description, a copyable `npx shadcn add @ui95/<name>` command, and one labelled cell per variant. New components appear automatically once they have a registry item and a demo.
+`/ui` shows every `registry:ui` and `registry:block` item from `registry.json` as a card in a bento grid: title, description, a copyable `npx shadcn add @ui95/<name>` command, and one labelled cell per variant. New components appear automatically once they have a registry item and a demo.
 
 ## Sub-features
 
@@ -12,7 +12,7 @@
 
 ## How to get to it (user POV)
 
-- Open `/components` on the dev server.
+- Open `/ui` on the dev server.
 - From the desktop, Start > `Components`, or the `Components` link on the taskbar.
 
 ## Driving it with dither.mjs
@@ -23,7 +23,7 @@ Preconditions:
 - `npm run docs:generate` reports `<n> showcased item(s)` with the number of ui and block items in `registry.json`.
 
 - **Pickup.** Run `npm run docs:generate`. It exits 0 and names the item count. A missing demo exits 1 naming `components/showcase/demos/<name>.tsx`.
-- **Cells, style, responsive.** Run `node .claude/skills/verify-ui95/dither.mjs audit 1440 900 375`. Every `/components` line reads `offPalette 0, rounded 0, tweened 0, translucent 0, overflow 0`, console errors are 0, and `audit.json` shows `cells` equal to the total variant count shown in the page header.
+- **Cells, style, responsive.** Run `node .claude/skills/verify-ui95/dither.mjs audit 1440 900 375`. Every `/ui` line reads `offPalette 0, rounded 0, tweened 0, translucent 0, overflow 0`, console errors are 0, and `audit.json` shows `cells` equal to the total variant count shown in the page header.
 - **One card by eye.** Run `node .claude/skills/verify-ui95/dither.mjs shot <name> phosphor-light` and the same with `cyan-pixel-dark`. Look at both PNGs: every variant visible, nothing clipped, labels legible.
 - **Copy.** The headless browser has no clipboard permission. Verify by hand in a real browser, or treat it as unverified and say so.
 

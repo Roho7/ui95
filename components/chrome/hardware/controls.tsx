@@ -13,7 +13,7 @@ import { buildAddCommand, PACKAGE_MANAGERS } from "@/lib/docs/package-managers"
 const NAV = [
   { href: "/hardware", label: "Parts", isCurrent: (path: string) => path.startsWith("/hardware") },
   { href: "/docs", label: "Manual", isCurrent: () => false },
-  { href: "/components", label: "UI95", isCurrent: () => false },
+  { href: "/ui", label: "UI95", isCurrent: () => false },
 ] as const
 
 const COPIED_MS = 1400

@@ -12,7 +12,7 @@ Consumers install components with the shadcn CLI from the `@ui95` namespace. `np
 
 ## How to get to it (user POV)
 
-- The Setup strip at the top of `/components`: `npx shadcn@latest init -b radix`, then `npx shadcn registry add "@ui95=https://nostalgui.vercel.app/r/{style}/{name}.json"`, then `npx shadcn add @ui95/<name>`.
+- The Setup strip at the top of `/ui`: `npx shadcn@latest init -b radix`, then `npx shadcn registry add "@ui95=https://nostalgui.vercel.app/r/{style}/{name}.json"`, then `npx shadcn add @ui95/<name>`.
 
 ## Driving it with dither.mjs
 

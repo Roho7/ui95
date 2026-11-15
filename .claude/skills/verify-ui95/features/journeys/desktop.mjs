@@ -40,6 +40,6 @@ export default async function verifyDesktop({ page, baseUrl, evidenceDir, expect
 
   await openStartMenu(page)
   await page.getByRole("menuitem", { name: "Components" }).click()
-  await page.waitForURL(`${baseUrl}/components`)
-  expect("Start > Components navigates to the catalogue", page.url().endsWith("/components"))
+  await page.waitForURL(`${baseUrl}/ui`)
+  expect("Start > Components navigates to the catalogue", page.url().endsWith("/ui"))
 }

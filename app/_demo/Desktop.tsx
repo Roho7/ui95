@@ -123,7 +123,7 @@ const ERROR_MESSAGES = [
 ] as const
 
 const ICONS = [
-  { label: "Components", href: "/components", icon: <Folder size={36} className="fill-current" aria-hidden="true" /> },
+  { label: "Components", href: "/ui", icon: <Folder size={36} className="fill-current" aria-hidden="true" /> },
   { label: "Docs", href: "/docs", icon: <FileAlt size={36} className="fill-current" aria-hidden="true" /> },
   { label: "Source", href: SOURCE_URL, icon: <Github size={36} className="fill-current" aria-hidden="true" /> },
 ] as const

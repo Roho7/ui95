@@ -20,7 +20,7 @@ node .claude/skills/verify-ui95/dither.mjs up
 ```
 
 - If a `next dev` from this repo already owns port 3000 (the user usually runs one), `up` reuses it and `down` will never stop it.
-- Otherwise it starts `npm run dev -- --port 3000` detached, writes `.verify/dev.pid` and `.verify/dev.log`, and waits until `/components` serves the catalogue (the `id="button"` card), not merely until the port answers.
+- Otherwise it starts `npm run dev -- --port 3000` detached, writes `.verify/dev.pid` and `.verify/dev.log`, and waits until `/ui` serves the catalogue (the `id="button"` card), not merely until the port answers.
 - `predev` regenerates the showcase index, so a fresh start always reflects `registry.json`.
 - Next 16 refuses a second `next dev` in the same checkout, so two instances cannot run side by side. Do not try; reuse the running one. If port 3000 belongs to another project, `up` refuses; set `DITHER_PORT=3100` and rerun.
 - The database, auth and seed data concepts do not apply: the app is static and has no backend.
@@ -31,7 +31,7 @@ node .claude/skills/verify-ui95/dither.mjs up
 node .claude/skills/verify-ui95/dither.mjs doctor
 ```
 
-Read-only. Checks port 3000 is listening, its process runs from this repo, `/components` renders the catalogue, the registry serves `/r/button.json`, and Google Chrome is installed. Run it first whenever anything looks off; drive only a `doctor: healthy` instance.
+Read-only. Checks port 3000 is listening, its process runs from this repo, `/ui` renders the catalogue, the registry serves `/r/button.json`, and Google Chrome is installed. Run it first whenever anything looks off; drive only a `doctor: healthy` instance.
 
 ## Static checks
 
@@ -67,14 +67,14 @@ node .claude/skills/verify-ui95/dither.mjs audit 1440 900 375
 
 Headless Chrome via `playwright-core` (channel `chrome`, no browser download). For each width and route it loads the page, then switches theme the way a user does: clicks the `Phosphor` / `Cyan pixel` / `Retro Candy` buttons and the `Dark mode` checkbox (ARIA names from `app/_site/ThemeControls.tsx`), waits for `<html data-theme>` and the `dark` class to match, and inspects every rendered element:
 
-- **offPalette:** text, background, border, outline, box-shadow and SVG shape fill colors must resolve to `--ink-0..3`, `--desktop` or transparent in that theme. An element marked `data-palette-swatch` skips only its background check; that is for previews of other palettes, such as the swatches on `/docs/theming`.
+- **offPalette:** text, background, border, outline, box-shadow and SVG shape fill colors must resolve to `--ink-0..3`, `--desktop` or transparent in that theme. An element marked `data-palette-swatch` skips only its background check; that is for previews of other palettes, such as the swatches on `/ui/theming`.
 - **rounded:** any non-zero computed corner radius.
 - **tweened:** any transition with a duration, or an animation whose timing is not `steps()` (the terminal cursor's `blink` is allowed).
 - **translucent:** any painted element with `opacity < 1` (blink excepted).
 - **overflow:** any variant cell whose content paints outside the cell or scrolls inside it, and any sideways page scroll.
 - **console errors** per route.
 
-Routes: `/`, `/docs`, `/components`, `/components/button`, `/components/window` and `/components/pixel-glyphs` at every width. `/` is the desktop landing: windows float on a 1280px stage at 1280px and wider and stack in reading order below that. Routes with variant cells fail if they render none.
+Routes: `/`, `/docs`, `/ui`, `/ui/button`, `/ui/window` and `/ui/pixel-glyphs` at every width. `/` is the desktop landing: windows float on a 1280px stage at 1280px and wider and stack in reading order below that. Routes with variant cells fail if they render none.
 
 ```bash
 node .claude/skills/verify-ui95/dither.mjs shot cta-button cyan-pixel-dark

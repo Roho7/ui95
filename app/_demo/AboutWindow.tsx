@@ -26,7 +26,7 @@ function AboutWindow({ itemCount, ...windowProps }: AboutWindowProps) {
         </p>
         <div className="flex flex-col md:flex-row gap-3">
           <CtaButton asChild shine={{ pauseDuration: 4, sweepDuration: 0.9 }}>
-            <Link href="/components">Browse components</Link>
+            <Link href="/ui">Browse components</Link>
           </CtaButton>
           <Button asChild variant="outline">
             <Link href="/docs">Read the docs</Link>
