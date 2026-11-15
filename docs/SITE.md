@@ -178,6 +178,10 @@ The page opens on a flat lay of loose parts, like reference 1: a CRT tube, a key
 
 A split screen shows a beige bench of live parts on the left and a UI95 desktop on the right. A patch cable connects a hardware knob to a UI95 slider, and the two move together. It is the cheapest concept and it shows that the two sides interoperate. It also reads as two products side by side, and it never shows hardware building a computer.
 
+### Social card (later)
+
+The site's main OG image becomes a tilted isometric wall of real component tiles, like the SPEC-01 card: knobs, lamps, meters, segment displays, switches and buttons, plus UI95 windows where they fit. A big thin title lockup in the style of "UI95/HARDWARE" sits bottom-left. It uses the matte beige palette and soft top-left light, not SPEC-01's white. The tiles are renders of the real components, not drawings, so the card is built once enough parts exist (step 20).
+
 ## Docs page layouts
 
 ### Hardware95 part page
@@ -290,6 +294,7 @@ Each PR ships on its own and ends in a check. The split comes first because the 
 17. **The landing.** Add the `(machine)` group at `/` with Concept A: power-on boot, the live `win95-desktop` inside `crt-monitor`, knobs wired to the CRT and to volume, and the two entry buttons. A journey checks power-on, that the desktop is interactive inside the screen, and that each entry button reaches its library.
 18. **`tape-deck` device.** Build it from `tape-buttons`, `segment-display`, `radial-meter` and `rotary-knob`, at `/hardware/devices/tape-deck`. It also sits on the landing desk.
 19. **Copy and reach.** Per-library titles, descriptions and OG images, the README, and serving Hardware95 items to `base-*` projects by refusing per item in `app/r/[style]/[file]/route.ts`.
+20. **Main OG image.** Generate the isometric wall from the real components once at least six Hardware95 parts ship. A Playwright script screenshots each demo tile against the beige background, and a compose step tilts the grid and adds the title, writing a static `opengraph-image.png`. `next/og` is the fallback. Its renderer supports only a subset of CSS, so the layered gradients and SVG shading probably won't survive (inferred, not tested). Check by comparing the card with live screenshots of the same tiles.
 
 ## Open questions for Rohosen
 
