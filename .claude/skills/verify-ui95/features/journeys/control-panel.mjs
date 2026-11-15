@@ -45,6 +45,30 @@ export default async function verifyControlPanel({ page, baseUrl, evidenceDir, e
   await page.locator("#panel-palette").selectOption("phosphor")
   await page.screenshot({ path: join(evidenceDir, "button.png") })
 
+  await page.goto(`${baseUrl}/hardware/hardware`, { waitUntil: "networkidle" })
+  const folders = page.locator('[data-part="panel-folders"]')
+  expect("the folder window marks the current component", (await folders.locator('[aria-current="page"]').textContent())?.trim() === "Hardware95 foundation")
+  await folders.getByRole("searchbox", { name: "Search components" }).fill("rot")
+  expect("searching narrows the folders", (await folders.locator('[data-part="panel-folder"]').count()) === 1)
+  await folders.getByRole("link", { name: "Rotary knob" }).click()
+  await page.waitForURL(`${baseUrl}/hardware/rotary-knob`)
+  expect("a folder loads its component onto the stage and the URL", (await page.locator('[data-part="panel-stage"]').getByRole("slider", { name: "Volume" }).count()) === 1)
+  await page.screenshot({ path: join(evidenceDir, "folders-hardware.png") })
+
+  await page.goto(`${baseUrl}/ui/button`, { waitUntil: "networkidle" })
+  const uiFolders = page.locator('[data-part="panel-folders"]')
+  expect("UI95 folders are grouped by section", (await uiFolders.locator('[data-part="panel-folder-heading"]').allTextContents()).join(",") === "Components,Blocks,Utilities")
+  const search = uiFolders.getByRole("searchbox", { name: "Search components" })
+  await search.fill("switch")
+  await search.press("Enter")
+  await page.waitForURL(`${baseUrl}/ui/switch`)
+  expect("Enter in the search opens the first match", (await page.locator('[data-part="panel-header"] h1').textContent()) === "Switch")
+  for (const size of [{ width: 1280, height: 800 }, { width: 1440, height: 900 }]) {
+    await page.setViewportSize(size)
+    expect(`no page scroll with the folder window at ${size.width}x${size.height}`, await fitsWithoutScroll(page))
+  }
+  await page.screenshot({ path: join(evidenceDir, "folders-ui.png") })
+
   await page.goto(`${baseUrl}/ui/window`, { waitUntil: "networkidle" })
   const example = page.getByRole("radiogroup", { name: "Example" })
   expect("components without a schema fall back to their examples", (await example.getByRole("radio").count()) >= 2 && (await page.locator('[data-panel-status]').textContent()) === "Example")
