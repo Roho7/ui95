@@ -1,17 +1,12 @@
 import { join } from "node:path"
 
-const WIN95_CHROME = '[data-slot="taskbar"], [data-slot="menubar"], [data-slot="crt-screen"], [data-slot="window"]'
+const WIN95_CHROME = '[data-slot="taskbar"], [data-slot="menubar"], [data-slot="crt-screen"][data-fullscreen], [data-slot="window"]'
 
 export default async function verifyHardwareChrome({ page, baseUrl, evidenceDir, expect }) {
   await page.goto(`${baseUrl}/components/rotary-knob`, { waitUntil: "networkidle" })
   expect("/components/rotary-knob redirects to /hardware/rotary-knob", new URL(page.url()).pathname === "/hardware/rotary-knob", page.url())
   expect("the part page renders no Win95 chrome", (await page.locator(WIN95_CHROME).count()) === 0)
-  expect("the part page sits in the Hardware95 shell", (await page.locator('[data-part="hw-site"] [data-part="hw-masthead"]').count()) === 1)
-  const headingFont = await page.locator("h1").evaluate((element) => getComputedStyle(element).fontFamily)
-  expect("the heading is printed in the condensed panel face, not a pixel font", !/silkscreen|vt323|pixel/i.test(headingFont), headingFont)
-  const currentPart = page.locator('[data-part="hw-index"] a[aria-current="page"]')
-  expect("the parts index lights the current part", (await currentPart.textContent())?.trim() === "Rotary knob" && (await currentPart.locator("[data-on]").count()) === 1)
-  expect("the Parts key is lit", (await page.locator('[data-part="hw-nav"] a[aria-current="page"]').textContent())?.trim() === "Parts")
+  expect("the part page is the Hardware95 control panel", (await page.locator('[data-part="panel-app"][data-skin="instrument"]').count()) === 1)
   await page.screenshot({ path: join(evidenceDir, "rotary-knob.png") })
 
   await page.goto(`${baseUrl}/components/hardware`, { waitUntil: "networkidle" })
@@ -23,9 +18,12 @@ export default async function verifyHardwareChrome({ page, baseUrl, evidenceDir,
   const tileParts = new Set(await page.locator('[data-part="hw-tile-head"] a').allTextContents())
   expect("the catalogue shows every Hardware95 part", tileParts.size === partCount, `${tileParts.size} of ${partCount}`)
   expect("the catalogue renders no Win95 chrome", (await page.locator(WIN95_CHROME).count()) === 0)
+  expect("the catalogue sits in the Hardware95 shell with the Parts key lit", (await page.locator('[data-part="hw-site"] [data-part="hw-masthead"]').count()) === 1 && (await page.locator('[data-part="hw-nav"] a[aria-current="page"]').textContent())?.trim() === "Parts")
+  const headingFont = await page.locator("h1").evaluate((element) => getComputedStyle(element).fontFamily)
+  expect("the catalogue heading is printed in the condensed panel face, not a pixel font", !/silkscreen|vt323|pixel/i.test(headingFont), headingFont)
   await page.screenshot({ path: join(evidenceDir, "catalogue.png") })
 
-  await page.goto(`${baseUrl}/ui/button`, { waitUntil: "networkidle" })
+  await page.goto(`${baseUrl}/ui`, { waitUntil: "networkidle" })
   const sidebar = page.locator("aside")
   expect("the UI95 sidebar no longer lists Hardware95 parts", (await sidebar.getByText("Rotary knob", { exact: true }).count()) === 0)
   await page.getByRole("menuitem", { name: "Hardware95" }).click()

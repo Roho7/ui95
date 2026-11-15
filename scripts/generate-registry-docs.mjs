@@ -159,6 +159,12 @@ function createApiReader(items) {
     return undefined
   }
 
+  function readStringOptions(type) {
+    const members = (type.isUnion() ? type.types : [type]).filter((member) => (member.flags & (ts.TypeFlags.Undefined | ts.TypeFlags.Null)) === 0)
+    const isLiteralUnion = members.length > 1 && members.every((member) => member.isStringLiteral())
+    return isLiteralUnion ? members.map((member) => member.value) : null
+  }
+
   function readParameterDefaults(declaration) {
     const defaults = new Map()
     const pattern = findFunction(declaration)?.parameters[0]?.name
@@ -218,18 +224,16 @@ function createApiReader(items) {
       .getTypeOfSymbolAtLocation(parameter, declaration)
       .getProperties()
       .filter(isOwnProp)
-      .map((prop) => ({
-        name: prop.name,
-        type: stripNullish(
-          checker.typeToString(
-            checker.getTypeOfSymbolAtLocation(prop, declaration),
-            declaration,
-            ts.TypeFormatFlags.NoTruncation
-          )
-        ),
-        required: (prop.flags & ts.SymbolFlags.Optional) === 0,
-        defaultValue: parameterDefaults.get(prop.name) ?? variantDefaults.get(prop.name) ?? null,
-      }))
+      .map((prop) => {
+        const propType = checker.getTypeOfSymbolAtLocation(prop, declaration)
+        return {
+          name: prop.name,
+          type: stripNullish(checker.typeToString(propType, declaration, ts.TypeFormatFlags.NoTruncation)),
+          required: (prop.flags & ts.SymbolFlags.Optional) === 0,
+          defaultValue: parameterDefaults.get(prop.name) ?? variantDefaults.get(prop.name) ?? null,
+          options: readStringOptions(propType),
+        }
+      })
   }
 
   return function readApi(filePath) {

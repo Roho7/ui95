@@ -32,6 +32,9 @@ This directory is the maintained source for verifying the user-facing behavior o
 | Hardware95 chrome and the library split | [hardware-chrome.md](hardware-chrome.md) | `journey hardware-chrome` |
 | Legacy URL redirects | [legacy-urls.md](legacy-urls.md) | `journey legacy-urls` |
 | Showcase bento (`/ui`, `/hardware`) | [showcase.md](showcase.md) | `journey showcase` |
+| Component control panel | [control-panel.md](control-panel.md) | `journey control-panel` |
+| CRT monitor (Hardware95) | journeys/crt-monitor.mjs | `journey crt-monitor` |
+| Landing, boot the machine (`/`) | [landing.md](landing.md) | `journey landing` |
 | Operator's manual (`/docs`) | [manual.md](manual.md) | `journey manual` |
 | CTA keycap button | [cta-button.md](cta-button.md) | `journey cta-button` |
 | Retro desktop landing (`/`) | [retro-desktop.md](retro-desktop.md) | `journey desktop` |

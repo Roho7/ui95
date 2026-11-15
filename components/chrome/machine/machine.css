@@ -1,0 +1,218 @@
+[data-part="machine-site"] {
+  --machine-wall: #cfc7b6;
+  --machine-desk: #a89c83;
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 28px;
+  padding: 22px 20px 48px;
+  background:
+    linear-gradient(180deg, transparent 0 62%, rgb(0 0 0 / 0.08) 62.2%, transparent 63%),
+    linear-gradient(180deg, var(--machine-wall) 0 62%, var(--machine-desk) 62%, #94886f 100%);
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  color: var(--hw-legend);
+}
+
+[data-part="machine-header"] {
+  width: min(100%, 1100px);
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+[data-part="machine-header"] nav {
+  display: flex;
+  gap: 20px;
+  font-family: var(--hw-font);
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+[data-part="machine-site"] a {
+  color: inherit;
+  text-decoration: none;
+}
+
+[data-part="machine-desk"] {
+  position: relative;
+  width: min(100%, 860px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+}
+
+[data-part="machine-desk"] [data-part="monitor"] {
+  --hw-monitor-width: 860px;
+}
+
+[data-part="machine-desk"] [data-part="knob"] {
+  flex-direction: row;
+  gap: 2px;
+}
+
+[data-part="machine-desk"] [data-part="knob"] [data-part="knob-scale"] {
+  display: none;
+}
+
+[data-part="machine-desk"] [data-part="knob-mount"] {
+  width: calc(var(--hw-knob-size) * 1.15);
+  height: calc(var(--hw-knob-size) * 1.15);
+}
+
+[data-part="machine-stage-frame"],
+[data-part="machine-boot"] {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+}
+
+[data-part="machine-stage"] {
+  transform-origin: 0 0;
+  font-family: var(--font-mono);
+  font-size: 1.125rem;
+  line-height: 1.25;
+  color: var(--foreground);
+  user-select: text;
+  -webkit-user-select: text;
+}
+
+[data-part="machine-boot"] {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  gap: 4px;
+  padding: 7% 8%;
+  background: #0b140e;
+  color: #9df5b0;
+  font-family: ui-monospace, "SF Mono", Menlo, monospace;
+  font-size: clamp(12px, 2.2vw, 20px);
+  text-shadow: 0 0 6px rgb(157 245 176 / 0.5);
+}
+
+[data-part="machine-boot"] p {
+  margin: 0;
+  opacity: 0;
+  animation: machine-line 1ms linear forwards;
+}
+
+[data-part="machine-hint"] {
+  position: absolute;
+  bottom: -40px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 0;
+  font-family: var(--hw-font);
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+[data-part="machine-hint"] [data-part="lamp"] {
+  scale: 0.7;
+  animation: machine-pulse 1.6s ease-in-out infinite;
+}
+
+[data-part="machine-doors"] {
+  width: min(100%, 860px);
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+  margin-top: 30px;
+}
+
+[data-part="machine-door"] {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 8px;
+  font-size: 15px;
+}
+
+[data-part="machine-door"] code {
+  font-family: ui-monospace, "SF Mono", Menlo, monospace;
+  font-size: 12px;
+  opacity: 0.8;
+}
+
+[data-part="machine-door-key"] {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  padding: 14px 18px 16px;
+  border-radius: 8px;
+  background: linear-gradient(180deg, var(--hw-body-hi), var(--hw-body) 60%, var(--hw-body-lo));
+  box-shadow: var(--hw-bevel-raised), 0 4px 0 var(--hw-body-lo), 0 6px 10px rgb(var(--hw-shadow-tint) / 0.35);
+  transition: translate 60ms ease-out, box-shadow 60ms ease-out;
+}
+
+[data-part="machine-door-key"]::before {
+  content: "";
+  width: 46px;
+  height: 6px;
+  border-radius: 2px;
+  background: color-mix(in oklab, var(--hw-amber) 30%, #2a2018);
+  box-shadow: inset 0 1px 1px rgb(0 0 0 / 0.6);
+}
+
+[data-part="machine-site"][data-state="on"] [data-part="machine-door-key"]::before {
+  background: var(--hw-amber-lit);
+  box-shadow: 0 0 8px 2px color-mix(in oklab, var(--hw-amber-lit) 65%, transparent);
+}
+
+[data-part="machine-door"]:hover [data-part="machine-door-key"] {
+  translate: 0 1px;
+}
+
+[data-part="machine-door"]:active [data-part="machine-door-key"] {
+  translate: 0 3px;
+  box-shadow: var(--hw-bevel-raised), 0 1px 0 var(--hw-body-lo), 0 2px 3px rgb(var(--hw-shadow-tint) / 0.35);
+}
+
+[data-part="machine-door"]:focus-visible {
+  outline: 2px solid var(--hw-amber-lit);
+  outline-offset: 4px;
+}
+
+@keyframes machine-line {
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes machine-pulse {
+  50% {
+    filter: brightness(0.55);
+  }
+}
+
+@media (max-width: 720px) {
+  [data-part="machine-doors"] {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  [data-part="machine-hint"] [data-part="lamp"],
+  [data-part="machine-boot"] p {
+    animation: none;
+    opacity: 1;
+  }
+
+  [data-part="machine-door-key"] {
+    transition: none;
+  }
+}
+
+[data-part="machine-door-key"] [data-part="legend"] {
+  font-size: 17px;
+  letter-spacing: 0.1em;
+}
