@@ -6,11 +6,11 @@ import { RotaryKnob } from "@/components/hardware/rotary-knob"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { Switch } from "@/components/ui/switch"
-import type { PanelControlHints } from "@/lib/panel/controls"
+import type { PanelControlHints, PanelValue } from "@/lib/panel/controls"
 
 export type PanelSpec = PanelControlHints & {
   component: React.ComponentType<Record<string, unknown>>
-  base?: Record<string, unknown>
+  base?: Record<string, PanelValue>
   children?: React.ReactNode
   valueProp?: { value: string; onChange: string; initial: number }
 }

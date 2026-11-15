@@ -15,11 +15,15 @@ import { SHOWCASE_ENTRIES } from "@/components/showcase/demos.generated"
 import { useSoundEnabled } from "@/hooks/use-sound"
 import type { Library, RegistryDoc } from "@/lib/docs/types"
 import { deriveControls, initialValues, type PanelControl, type PanelValue } from "@/lib/panel/controls"
+import { buildAgentPrompt } from "@/lib/panel/prompt"
 
 import { type FolderEntry, FolderWindow } from "./FolderWindow"
 import { PANEL_SPECS } from "./specs"
 
-export type PanelDoc = Pick<RegistryDoc, "name" | "title" | "description" | "library" | "api" | "sounds" | "registryDependencies" | "dependencies">
+export type PanelDoc = Pick<RegistryDoc, "name" | "title" | "description" | "library" | "api" | "sounds" | "registryDependencies" | "dependencies"> & {
+  href: string
+  importPath: string | null
+}
 
 const FINISHES: readonly FaceplateFinish[] = ["putty", "cream", "khaki"]
 
@@ -120,6 +124,22 @@ function ThemeControls({ library, finish, onFinish }: { library: Library; finish
   )
 }
 
+const COPIED_MS = 1400
+
+function CopyPromptKey({ prompt }: { prompt: () => string }) {
+  const [isCopied, setCopied] = React.useState(false)
+  const copy = () => {
+    void navigator.clipboard?.writeText(prompt())
+    setCopied(true)
+    window.setTimeout(() => setCopied(false), COPIED_MS)
+  }
+  return (
+    <button type="button" data-panel-key="" data-slot="button" aria-pressed={isCopied} onClick={copy}>
+      {isCopied ? "Prompt copied" : "Copy prompt"}
+    </button>
+  )
+}
+
 function SoundKey() {
   const [isEnabled, setEnabled] = useSoundEnabled()
   return (
@@ -163,6 +183,21 @@ function ControlPanel({ doc, folders }: { doc: PanelDoc; folders: readonly Folde
             {frame.system}
           </Link>
           <h1>{doc.title}</h1>
+          <CopyPromptKey
+            prompt={() =>
+              buildAgentPrompt({
+                name: doc.name,
+                title: doc.title,
+                library: doc.library,
+                description: doc.description,
+                href: doc.href,
+                importPath: doc.importPath,
+                api: doc.api[0],
+                values: spec ? { ...spec.base, ...values, ...(spec.valueProp ? { [spec.valueProp.value]: liveValue } : {}) } : {},
+                children: typeof spec?.children === "string" ? spec.children : undefined,
+              })
+            }
+          />
           <SoundKey />
         </header>
         <Box title="Stage" part="panel-stage" aside={<span data-panel-status="">{spec ? "Live" : "Example"}</span>}>

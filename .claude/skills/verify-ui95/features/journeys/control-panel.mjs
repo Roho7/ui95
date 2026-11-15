@@ -5,6 +5,10 @@ async function fitsWithoutScroll(page) {
 }
 
 export default async function verifyControlPanel({ page, baseUrl, evidenceDir, expect }) {
+  await page.addInitScript(() => {
+    window.__copied = []
+    Object.defineProperty(navigator, "clipboard", { value: { writeText: async (text) => window.__copied.push(text) }, configurable: true })
+  })
   await page.goto(`${baseUrl}/hardware/rotary-knob`, { waitUntil: "networkidle" })
   const stage = page.locator('[data-part="panel-stage"]')
   const controls = page.locator('[data-part="panel-controls"]')
@@ -30,6 +34,14 @@ export default async function verifyControlPanel({ page, baseUrl, evidenceDir, e
   await page.keyboard.press("End")
   expect("turning the part on stage moves the value control", (await controls.locator("#panel-value").inputValue()) === "100")
   await page.screenshot({ path: join(evidenceDir, "rotary-knob.png") })
+
+  await page.getByRole("button", { name: "Copy prompt" }).click()
+  const prompt = await page.evaluate(() => window.__copied.at(-1) ?? "")
+  expect("Copy prompt copies a short agent prompt, not the page", prompt.length < 2000 && prompt.startsWith("# Rotary knob (@ui95/rotary-knob)"), `${prompt.length} chars`)
+  expect("the prompt carries install, import, props and an example", ["npx shadcn@latest add @ui95/rotary-knob", 'import { RotaryKnob } from "@/components/hardware/rotary-knob"', "Props:", "- variant?: \"skirted\" | \"pointer\""].every((line) => prompt.includes(line)))
+  expect("the prompt's example matches the controls on stage", prompt.includes('<RotaryKnob label="Gain" size="lg" variant="pointer" value={100} />'), prompt.split("Example:\n")[1]?.split("\n")[0])
+  expect("the key confirms the copy", (await page.getByRole("button", { name: "Prompt copied" }).count()) === 1)
+  expect("no install command is printed on the page", !(await page.locator("body").innerText()).includes("npx shadcn"))
 
   const sound = page.getByRole("button", { name: /Sound/ })
   const soundBefore = await sound.getAttribute("aria-pressed")
