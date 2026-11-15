@@ -42,6 +42,7 @@ import { demo as popoverDemo } from "./demos/popover"
 import { demo as progressDemo } from "./demos/progress"
 import { demo as radioGroupDemo } from "./demos/radio-group"
 import { demo as resizableDemo } from "./demos/resizable"
+import { demo as rotaryKnobDemo } from "./demos/rotary-knob"
 import { demo as scrollAreaDemo } from "./demos/scroll-area"
 import { demo as selectDemo } from "./demos/select"
 import { demo as separatorDemo } from "./demos/separator"
@@ -81,6 +82,12 @@ export const SHOWCASE_ENTRIES: readonly ShowcaseEntry[] = [
     title: "Hardware95 foundation",
     description: "The base of every Hardware95 part: shared material, legend, accent, bevel and shadow tokens, a matte plastic Faceplate in putty, cream or khaki, printed Legend text and a glass pilot Lamp.",
     demo: hardwareDemo,
+  },
+  {
+    name: "rotary-knob",
+    title: "Rotary knob",
+    description: "A matte charcoal plastic knob with a white indicator line over a scale printed on the faceplate, as a skirted knob or a pointer knob. Turn it by dragging, scrolling or with the arrow keys, and it clicks at each tick.",
+    demo: rotaryKnobDemo,
   },
   {
     name: "button",

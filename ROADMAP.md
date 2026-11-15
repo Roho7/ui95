@@ -93,7 +93,7 @@ Shipped components with no shadcn counterpart.
 Realistic retro hardware in matte beige-box plastic: one light source, soft shadows, travel and detent clicks. Hardware95 parts carry scoped tokens, depend on `hardware` and never on `theme`. See [`docs/DESIGN.md`](docs/DESIGN.md#hardware95).
 
 - [x] hardware: plastic faceplate finishes, printed legends, a pilot lamp and the shared tokens
-- [ ] rotary-knob: a charcoal skirted or pointer knob over a printed scale
+- [x] rotary-knob: a charcoal skirted or pointer knob over a printed scale
 - [ ] rotary-dial: a rotating stepped selector, a knob with detents
 - [ ] lever-switch: a bat-handle toggle with an optional safety cover
 - [ ] radial-meter: a VU meter whose needle swings and settles

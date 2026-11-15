@@ -631,6 +631,43 @@
         }
       ]
     },
+    "knob.tick": {
+      "note": "Detent click: sine 940 Hz falling to 420 Hz over a short noise tick, one per printed tick",
+      "layers": [
+        {
+          "wave": "sine",
+          "frequency": 940,
+          "attack": 0.0005,
+          "decay": 0.006,
+          "gain": 0.16,
+          "frequencyEnd": 420
+        },
+        {
+          "wave": "noise",
+          "frequency": 0,
+          "attack": 0,
+          "decay": 0.003,
+          "gain": 0.12,
+          "filter": {
+            "type": "bandpass",
+            "frequency": 3200,
+            "q": 1.2
+          }
+        }
+      ],
+      "jitter": {
+        "cents": 30,
+        "gainDb": 1,
+        "decay": 0.1
+      },
+      "detent": {
+        "step": 5,
+        "minGap": 18,
+        "maxAhead": 60,
+        "policy": "spread",
+        "pitchFollow": 0
+      }
+    },
     "lever.tick": {
       "note": "Sine 700 Hz, 0.5 / 8 ms",
       "layers": [

@@ -1,0 +1,128 @@
+[data-part="knob"] {
+  --hw-knob-size: 64px;
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+
+[data-part="knob"][data-size="sm"] {
+  --hw-knob-size: 40px;
+}
+
+[data-part="knob"][data-size="lg"] {
+  --hw-knob-size: 96px;
+}
+
+[data-part="knob-mount"] {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: calc(var(--hw-knob-size) * 1.5);
+  height: calc(var(--hw-knob-size) * 1.5);
+}
+
+[data-part="knob-scale"] {
+  position: absolute;
+  inset: 0;
+  overflow: visible;
+  color: var(--hw-legend);
+}
+
+[data-part="knob-scale"] line {
+  stroke: currentColor;
+  stroke-width: 0.9;
+  stroke-linecap: butt;
+  opacity: 0.6;
+}
+
+[data-part="knob-scale"] line[data-major] {
+  stroke-width: 1.5;
+  opacity: 0.92;
+}
+
+[data-part="knob-scale"] text {
+  fill: currentColor;
+  font-family: var(--hw-font);
+  font-size: 7px;
+  font-weight: 700;
+  font-stretch: condensed;
+  text-anchor: middle;
+  dominant-baseline: central;
+  opacity: 0.92;
+}
+
+[data-part="knob"][data-size="sm"] [data-part="knob-scale"] text {
+  display: none;
+}
+
+[data-part="knob-body"] {
+  position: relative;
+  width: var(--hw-knob-size);
+  height: var(--hw-knob-size);
+  border-radius: 50%;
+  cursor: grab;
+  touch-action: none;
+  outline: none;
+}
+
+[data-part="knob-face"] {
+  display: block;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  filter: drop-shadow(1px 2px 1.2px rgb(var(--hw-shadow-tint) / 0.5)) drop-shadow(3px 6px 5px rgb(var(--hw-shadow-tint) / 0.35));
+  transition: filter 80ms ease-out, scale 80ms ease-out;
+}
+
+[data-part="knob-body"][data-dragging] {
+  cursor: grabbing;
+}
+
+[data-part="knob-body"][data-dragging] [data-part="knob-face"] {
+  scale: 0.985;
+  filter: drop-shadow(1px 1px 1px rgb(var(--hw-shadow-tint) / 0.55)) drop-shadow(2px 4px 3px rgb(var(--hw-shadow-tint) / 0.3));
+}
+
+[data-part="knob-body"][aria-disabled] {
+  cursor: not-allowed;
+}
+
+[data-part="knob-body"][aria-disabled] [data-part="knob-face"] {
+  opacity: 0.72;
+}
+
+[data-part="knob-body"]:focus-visible {
+  box-shadow: 0 0 0 3px color-mix(in oklab, var(--hw-amber-lit) 75%, transparent);
+}
+
+[data-part="knob-turn"] {
+  rotate: var(--hw-turn);
+}
+
+[data-part="knob-skirt"],
+[data-part="knob-cap"] {
+  stroke-width: 1.4;
+}
+
+[data-part="knob-flute"] {
+  stroke: rgb(0 0 0 / 0.45);
+  stroke-width: 2;
+}
+
+[data-part="knob-dish"] {
+  stroke: rgb(255 255 255 / 0.07);
+  stroke-width: 0.8;
+}
+
+[data-part="knob-index"] {
+  stroke: #ece5d3;
+  stroke-width: 3;
+  stroke-linecap: round;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  [data-part="knob-face"] {
+    transition: none;
+  }
+}
