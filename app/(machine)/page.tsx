@@ -1,6 +1,6 @@
 import type { Metadata } from "next"
 
-import { Desktop } from "@/app/_demo/Desktop"
+import { Machine } from "@/components/chrome/machine/Machine"
 import { JsonLd } from "@/components/docs/JsonLd"
 import { REGISTRY_DOCS } from "@/lib/docs/registry-docs"
 import { websiteJsonLd } from "@/lib/seo"
@@ -14,7 +14,7 @@ export default function HomePage() {
   return (
     <>
       <JsonLd data={websiteJsonLd()} />
-      <Desktop itemCount={REGISTRY_DOCS.length} />
+      <Machine itemCount={REGISTRY_DOCS.length} />
     </>
   )
 }

@@ -8,6 +8,8 @@ async function openStartMenu(page) {
 
 export default async function verifyDesktop({ page, baseUrl, evidenceDir, expect }) {
   await page.goto(`${baseUrl}/`, { waitUntil: "networkidle" })
+  await page.getByRole("button", { name: "Power" }).click()
+  await page.getByRole("region", { name: "install.bat" }).waitFor({ timeout: 8000 })
   await page.screenshot({ path: join(evidenceDir, "desktop.png") })
 
   const terminal = page.getByRole("region", { name: "install.bat" })
@@ -23,7 +25,8 @@ export default async function verifyDesktop({ page, baseUrl, evidenceDir, expect
   const deltaX = after.x - before.x
   const deltaY = after.y - before.y
   expect("dragging the title bar moves the window", deltaX > 100 && deltaY > 60, `moved ${deltaX}, ${deltaY}`)
-  expect("the drop position snaps to the 2px --pixel grid", after.x % 2 === 0 && after.y % 2 === 0, `${after.x}, ${after.y}`)
+  const layout = await terminal.evaluate((element) => [element.offsetLeft, element.offsetTop])
+  expect("the drop position snaps to the 2px --pixel grid", layout.every((value) => value % 2 === 0), layout.join(", "))
   await page.screenshot({ path: join(evidenceDir, "after-drag.png") })
 
   await openStartMenu(page)
