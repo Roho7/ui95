@@ -166,7 +166,7 @@ function ControlPanel({ doc }: { doc: PanelDoc }) {
         </header>
         <Box title="Stage" part="panel-stage" aside={<span data-panel-status="">{spec ? "Live" : "Example"}</span>}>
           <div data-part="panel-stage-surface">
-            <div data-part="panel-stage-content" style={spec ? undefined : { "--panel-zoom": 1 } as React.CSSProperties}>
+            <div key={spec ? "live" : variant?.label} data-part="panel-stage-content" style={spec ? undefined : { "--panel-zoom": 1 } as React.CSSProperties}>
               {live ? live() : variant?.render()}
             </div>
           </div>
