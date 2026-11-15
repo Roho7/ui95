@@ -7,6 +7,7 @@ export type PropDoc = {
   type: string
   required: boolean
   defaultValue: string | null
+  options: string[] | null
 }
 
 export type ComponentApi = {
