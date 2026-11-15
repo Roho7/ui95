@@ -157,6 +157,7 @@ Hardware95 is the line of realistic retro hardware parts. The rules above are fo
 - **One light, from the top-left.** Highlights sit top-left and shadows fall bottom-right, on every part and at every size. Depth comes from bevels and shadow, not reflections.
 - **Shared tokens.** Every part reads the same `--hw-*` custom properties: `--hw-body`, `--hw-body-hi` and `--hw-body-lo` for the housing (set by the `Faceplate` finish), `--hw-recess` and `--hw-recess-hi` for wells and bezels, `--hw-legend` for print, `--hw-red`, `--hw-amber`, `--hw-green` and `--hw-slate` with `-lit` variants for accents and glow, `--hw-bevel-raised` and `--hw-bevel-recess` for edges, `--hw-shadow-ambient` and `--hw-shadow-part` for cast shadows, and `--hw-grain` for texture.
 - **Printed type.** Legends are condensed sans caps (`--hw-font`) through `Legend` or `data-part="legend"`.
+- **No text arrows, anywhere in the codebase.** Labels, links, buttons and headings never carry →, ←, ↗, », -> or similar glyphs. Use the plain label, an icon component, or the part's own affordance. `check-style.mjs` fails on them (`no-text-arrows`).
 - **Physical motion.** A part moves the way the real part does. A knob follows the pointer with no easing, a key travels down and springs back, and a lamp switches on at once and blooms.
 - **Plain CSS.** Each part's styles live in a CSS file next to it, targeted by `data-part` attributes. Layout classes in demos are fine.
 

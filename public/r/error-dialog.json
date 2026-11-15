@@ -17,5 +17,8 @@
       "target": "@components/retro/error-dialog.tsx"
     }
   ],
+  "categories": [
+    "ui"
+  ],
   "type": "registry:block"
 }

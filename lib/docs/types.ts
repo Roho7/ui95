@@ -1,3 +1,5 @@
+export type Library = "hardware95" | "ui95" | "shared"
+
 export type DocSection = "hardware" | "components" | "blocks" | "utilities"
 
 export type PropDoc = {
@@ -21,6 +23,7 @@ export type RegistryDoc = {
   name: string
   title: string
   description: string
+  library: Library
   section: DocSection
   notes: string | null
   dependencies: string[]

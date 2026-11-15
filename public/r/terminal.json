@@ -17,5 +17,8 @@
       "target": "@components/retro/terminal.tsx"
     }
   ],
+  "categories": [
+    "ui"
+  ],
   "type": "registry:block"
 }

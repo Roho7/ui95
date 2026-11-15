@@ -58,5 +58,8 @@
     }
   ],
   "docs": "Render <Ui95Sounds /> once in your root layout. Sounds live in sounds.json next to components.json (in src/ if @/* maps to ./src/*). After adding UI95 components run: node scripts/95-sound-lib.mjs sync. It adds only the sounds of installed components and keeps your edits. Silence one element with data-sound=\"none\", rename its sound with data-sound=\"my-key\", silence a sound with \"key\": false, or everything with \"enabled\": false.",
+  "categories": [
+    "shared"
+  ],
   "type": "registry:lib"
 }

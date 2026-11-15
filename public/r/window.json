@@ -96,5 +96,8 @@
       }
     }
   },
+  "categories": [
+    "ui"
+  ],
   "type": "registry:block"
 }

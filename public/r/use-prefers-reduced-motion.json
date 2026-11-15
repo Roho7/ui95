@@ -10,5 +10,8 @@
       "type": "registry:hook"
     }
   ],
+  "categories": [
+    "shared"
+  ],
   "type": "registry:lib"
 }

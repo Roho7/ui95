@@ -19,10 +19,18 @@ const SECTION_BY_TYPE = {
   "registry:lib": "utilities",
 }
 const EXCLUDED_TYPES = new Set(["registry:style"])
-const HARDWARE_CATEGORY = "hardware"
+const LIBRARY_BY_CATEGORY = { hardware: "hardware95", ui: "ui95", shared: "shared" }
+
+function libraryOf(item) {
+  const libraries = (item.categories ?? []).flatMap((category) => LIBRARY_BY_CATEGORY[category] ?? [])
+  if (libraries.length !== 1) {
+    throw new Error(`registry item "${item.name}" needs exactly one library category (${Object.keys(LIBRARY_BY_CATEGORY).join(", ")}), found ${libraries.length}`)
+  }
+  return libraries[0]
+}
 
 function sectionOf(item) {
-  return item.categories?.includes(HARDWARE_CATEGORY) ? "hardware" : SECTION_BY_TYPE[item.type]
+  return libraryOf(item) === "hardware95" ? "hardware" : SECTION_BY_TYPE[item.type]
 }
 const PROJECT_ROOT_TARGET_PREFIX = "~/"
 const NULLISH_UNION_MEMBER = /\s\|\s(?:undefined|null)(?![\w$])/g
@@ -267,6 +275,7 @@ function buildRegistryDocs(items) {
       name: item.name,
       title: item.title ?? item.name,
       description: item.description ?? "",
+      library: libraryOf(item),
       section: sectionOf(item),
       notes: item.docs ?? null,
       dependencies: item.dependencies ?? [],
