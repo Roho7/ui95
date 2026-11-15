@@ -2,7 +2,7 @@
 
 UI95 today is a shadcn registry of Win95-style reskins: 57 `registry:ui` items, 5 blocks, a theme and a sound engine. The goal is to sell the retro feel through Hardware95, a line of funky retro hardware controls such as knobs, dials, meters, switches and displays. [SPEC-01](https://spec-01.vercel.app/) does the same for modern pocket-instrument hardware. The classic library stays installable and documented, but the site and the roadmap put Hardware95 first.
 
-This doc covers what SPEC-01 ships and how, what UI95 keeps, changes and adds, the distribution model, the first components, the site restructure and a phased PR plan. The decisions Rohosen made on 2026-11-15 are folded in, and the questions still open are at the end.
+This doc covers what SPEC-01 ships and how, what UI95 keeps, changes and adds, the distribution model and the first components. The decisions Rohosen made on 2026-11-15 are folded in. The site split, the PR plan and the open questions now live in [`SITE.md`](SITE.md).
 
 Research date: 2026-11-15. SPEC-01 is two days old (its repo was created on 2026-11-13), so check the counts below again before quoting them.
 
@@ -175,75 +175,6 @@ Seven controls, drawn from the roadmap's special list where they overlap. Each o
 
 Later candidates from the roadmap and beyond: `crt-player` (built on `crt-screen`), `pov-keyboard`, `hold-to-speak`, nixie tubes, a cassette with turning reels, an oscilloscope trace and patch cables.
 
-## Website restructure
+## Site and plan
 
-The site opens on Hardware95 and keeps every existing URL working. The Win95 desktop leaves the home page and becomes a block.
-
-| Path | Today | After |
-|---|---|---|
-| `/` | Win95 desktop | Hardware95 landing: tape deck hero, install, numbered panel grid |
-| `/devices/<name>` | None | One page per device, starting with `/devices/tape-deck` |
-| `/components` | Bento catalogue of everything | Classic catalogue, titled "Classic components" |
-| `/components/[name]` | Doc page per item | Unchanged, for Hardware95 and classic items. `/components/win95-desktop` shows the desktop block. |
-| `/docs/*` | Four guides | Hardware95 getting-started first, classic installation and theming kept |
-
-### Hero
-
-The tape deck fills the first screen, built from `tape-buttons`, `segment-display`, `radial-meter` and `rotary-knob`. A visitor can play with it before reading anything. Under it go one line of copy, the CLI command with a copy key, the agent prompt and a sound toggle. The site plays sound by default, and the toggle mutes it. Installers still opt in to sound in their own apps.
-
-### Catalogue
-
-Below the hero sits a grid of numbered Hardware95 panels, one live demo per panel. A panel's title links to its `/components/[name]` page. The grid can reuse `ShowcaseCatalogue` filtered by the `hardware` category.
-
-### Nav
-
-The nav order is Hardware95 (`/`), Devices, Docs, Classic (`/components`) and GitHub. Classic stays one click away, so the library remains easy to find without leading.
-
-### Docs sidebar
-
-The sidebar gets a Hardware95 group first, then Devices, then the existing Components, Blocks and Utilities groups, relabelled "Classic".
-
-### Copy
-
-`SITE_TAGLINE`, `SITE_DESCRIPTION`, `SITE_KEYWORDS`, the README intro, the OG image and `llms.txt` change to lead with Hardware95.
-
-## Phased plan
-
-Each step is one small PR that ships on its own and passes `npm run verify`. Component PRs carry screenshots of the new part.
-
-**Phase 0: direction**
-
-1. This doc.
-
-**Phase 1: foundation**
-
-2. The `hardware` item. It adds the `hardware` category to the docs generator and a Hardware95 sidebar group, the `check-style.mjs` split, the shared tokens, `Faceplate`, `Legend` and `Lamp`, with a showcase demo.
-3. `rotary-knob`, with the rotary-input hook and a detent sound.
-
-**Phase 2: first components**
-
-4. `rotary-dial`. Its rotary hook moves into a shared file.
-5. `lever-switch`.
-6. `segment-display`.
-7. `radial-meter`.
-8. `tape-buttons`.
-9. `red-button`.
-10. The `haptics` lib item, wired into the sound slot events of every item shipped so far.
-
-**Phase 3: site**
-
-11. The Win95 desktop as a `win95-desktop` `registry:block`, with its demo. `/` keeps rendering it until the next step.
-12. The Hardware95 landing on `/`: install CLI and agent prompt, sound on by default with a mute toggle, and the numbered panel grid.
-13. Nav, sidebar labels, Hardware95 copy, OG image and `llms.txt`.
-
-**Phase 4: devices and reach**
-
-14. The `tape-deck` device block and its `/devices/tape-deck` page. It becomes the hero.
-15. Serve Hardware95 items to `base-*` projects by refusing per item in `app/r/[style]/[file]/route.ts`.
-16. Further devices and the later candidate components, one PR each.
-
-Each component PR follows the README's "Add a component" checklist, and its author checks the component in the browser on every `Faceplate` finish.
-
-## Open questions
-
-1. **Registry name and domain.** The default is to keep the `@ui95` namespace and `ui95.dev`, with Hardware95 as the name of the line. Should Hardware95 get its own domain or registry namespace instead?
+[`SITE.md`](SITE.md) replaces the website restructure, the phased plan and the open questions that used to sit here. In its model, Hardware95 is the physical machine and UI95 is the software on its screen. It covers the split into `/hardware`, `/ui` and a shared manual at `/docs`, each with its own chrome, plus the landing page where the machine boots into the UI95 desktop, the ordered PR plan and the questions still open.
