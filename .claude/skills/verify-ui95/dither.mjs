@@ -188,7 +188,7 @@ function auditPage() {
     }
   }
   const elements = [...document.body.querySelectorAll("*")].filter(
-    (element) => !element.closest("nextjs-portal, script, style, [data-nextjs-toast], [data-next-badge-root]")
+    (element) => !element.closest("nextjs-portal, script, style, [data-nextjs-toast], [data-next-badge-root], [data-hw]")
   )
   for (const element of elements) {
     const style = getComputedStyle(element)

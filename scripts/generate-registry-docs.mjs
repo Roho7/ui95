@@ -19,6 +19,11 @@ const SECTION_BY_TYPE = {
   "registry:lib": "utilities",
 }
 const EXCLUDED_TYPES = new Set(["registry:style"])
+const HARDWARE_CATEGORY = "hardware"
+
+function sectionOf(item) {
+  return item.categories?.includes(HARDWARE_CATEGORY) ? "hardware" : SECTION_BY_TYPE[item.type]
+}
 const PROJECT_ROOT_TARGET_PREFIX = "~/"
 const NULLISH_UNION_MEMBER = /\s\|\s(?:undefined|null)(?![\w$])/g
 
@@ -262,7 +267,7 @@ function buildRegistryDocs(items) {
       name: item.name,
       title: item.title ?? item.name,
       description: item.description ?? "",
-      section: SECTION_BY_TYPE[item.type],
+      section: sectionOf(item),
       notes: item.docs ?? null,
       dependencies: item.dependencies ?? [],
       registryDependencies: dependenciesByItem.get(item.name),

@@ -147,3 +147,17 @@ Every page is generated from `registry.json` and the source files, so nothing is
 - `lib/docs/pages.ts` flattens the sidebar groups once; the sidebar, search, prev/next, sitemap and `llms.txt` all read that list.
 - Install commands use `npx shadcn@latest add ${SITE_URL}/r/<name>.json`, with `SITE_URL` from `NEXT_PUBLIC_SITE_URL` or Vercel's production host.
 - Code blocks are plain `<pre>` with a copy button; a syntax highlighter would emit literal colors.
+
+## Hardware95
+
+Hardware95 is the line of realistic retro hardware parts. The rules above are for the classic library. Hardware95 has its own.
+
+- **Scoped, not themed.** Every part sets `data-hw` and styles itself from `components/hardware/hardware.css` under that attribute. It never depends on `theme`, so it drops into an app with any shadcn theme. The outermost part sets the default tokens, and a nested part inherits them.
+- **Matte 70s and 80s gear.** Bodies are beige, putty, cream or khaki plastic and painted steel, with grain and soft bevels. Recesses, bezels and knob caps are charcoal. There is no brushed or polished metal, chrome or shiny highlight sweep. The aesthetic section of `docs/DIRECTION.md` has the full brief and its five reference images.
+- **One light, from the top-left.** Highlights sit top-left and shadows fall bottom-right, on every part and at every size. Depth comes from bevels and shadow, not reflections.
+- **Shared tokens.** Every part reads the same `--hw-*` custom properties: `--hw-body`, `--hw-body-hi` and `--hw-body-lo` for the housing (set by the `Faceplate` finish), `--hw-recess` and `--hw-recess-hi` for wells and bezels, `--hw-legend` for print, `--hw-red`, `--hw-amber`, `--hw-green` and `--hw-slate` with `-lit` variants for accents and glow, `--hw-bevel-raised` and `--hw-bevel-recess` for edges, `--hw-shadow-ambient` and `--hw-shadow-part` for cast shadows, and `--hw-grain` for texture.
+- **Printed type.** Legends are condensed sans caps (`--hw-font`) through `Legend` or `data-part="legend"`.
+- **Physical motion.** A part moves the way the real part does. A knob follows the pointer with no easing, a key travels down and springs back, and a lamp switches on at once and blooms.
+- **Plain CSS.** Each part's styles live in a CSS file next to it, targeted by `data-part` attributes. Layout classes in demos are fine.
+
+`scripts/check-style.mjs` skips the classic class rules for `components/hardware/` and for the demos of `hardware`-category items. It requires every Hardware95 item to depend on `@ui95/hardware`, never on `@ui95/theme`, and never on `radix-ui`.

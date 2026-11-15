@@ -1,4 +1,4 @@
-export type DocSection = "components" | "blocks" | "utilities"
+export type DocSection = "hardware" | "components" | "blocks" | "utilities"
 
 export type PropDoc = {
   name: string

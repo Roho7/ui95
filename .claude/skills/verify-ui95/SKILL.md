@@ -53,7 +53,8 @@ Runs `npm run verify`: `npm run lint`, `npm run typecheck`, `npm run check:style
 | `no-framer-or-gsap` | `framer-motion`, `motion/react`, `gsap`, `react-spring` imports |
 | `no-comments` | `//`, `/* */`, `{/* */}` in any source file, GLSL strings included |
 | `roadmap-matches-registry` | a ticked `ROADMAP.md` entry that is not a shipped ui/block item, or a shipped item left unticked |
-| `registry-*` | every component file ships in an item, every item file exists, every `@/` import is declared as a `@ui95/*` registry dependency, every npm import is in the item's `dependencies`, every ui/block item depends on `@ui95/theme` |
+| `registry-*` | every component file ships in an item, every item file exists, every `@/` import is declared as a `@ui95/*` registry dependency, every npm import is in the item's `dependencies`, every classic ui/block item depends on `@ui95/theme` |
+| `hardware-*` | a `hardware`-category item that depends on `@ui95/theme` or `radix-ui`, or does not depend on `@ui95/hardware` |
 
 The generator fails if a `registry:ui` or `registry:block` item has no demo, or a demo has no item.
 
@@ -101,6 +102,8 @@ Proof standards:
 ## The new component contract
 
 When a component is added, all of these must hold before it is done. The tools enforce most of them; the rest are judgment calls to check by eye in the `shot` output.
+
+Hardware95 parts (`"categories": ["hardware"]`, files in `components/hardware/`) follow the Hardware95 section of `docs/DESIGN.md` instead of items 3 and 4. The audit skips everything inside `[data-hw]`, so prove a Hardware95 part with a journey and close-up screenshots on every `Faceplate` finish.
 
 1. **Registry item** in `registry.json` with the right `type`, `dependencies` and `registryDependencies` (always `@ui95/theme`, plus every `@ui95/*` it imports). `check:style` enforces this.
 2. **Demo** at `components/showcase/demos/<item-name>.tsx` exporting `demo: ShowcaseDemo` that shows every variant, size and state. Pick the `span` that keeps the bento grid without holes. The generator enforces existence; completeness is yours to check.

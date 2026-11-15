@@ -612,6 +612,33 @@
       ]
     },
     {
+      "name": "hardware",
+      "type": "registry:ui",
+      "title": "Hardware95 foundation",
+      "description": "The base of every Hardware95 part: shared material, legend, accent, bevel and shadow tokens, a matte plastic Faceplate in putty, cream or khaki, printed Legend text and a glass pilot Lamp.",
+      "docs": "Hardware95 parts style themselves under [data-hw] and never touch your shadcn theme, so they drop into any app. Faceplate takes finish=\"putty\" | \"cream\" | \"khaki\" and draws corner screws unless screws={false}. Legend prints condensed caps onto the panel in size sm, md or lg. Lamp takes on and tone=\"red\" | \"amber\" | \"green\". Every color and depth recipe is a --hw-* custom property, so override one on any ancestor to restyle every part inside it.",
+      "categories": [
+        "hardware"
+      ],
+      "files": [
+        {
+          "path": "components/hardware/hardware.css",
+          "type": "registry:component",
+          "target": "@components/hardware/hardware.css"
+        },
+        {
+          "path": "components/hardware/faceplate.tsx",
+          "type": "registry:component",
+          "target": "@components/hardware/faceplate.tsx"
+        },
+        {
+          "path": "components/hardware/lamp.tsx",
+          "type": "registry:component",
+          "target": "@components/hardware/lamp.tsx"
+        }
+      ]
+    },
+    {
       "name": "button",
       "type": "registry:ui",
       "title": "Button",

@@ -3,7 +3,11 @@ import { join, relative } from "node:path"
 
 const ROOT = new URL("..", import.meta.url).pathname
 const REGISTRY = JSON.parse(readFileSync(join(ROOT, "registry.json"), "utf8"))
-const COMPONENT_DIRS = ["components/ui", "components/retro"]
+const COMPONENT_DIRS = ["components/ui", "components/retro", "components/hardware"]
+const HARDWARE_DIR = "components/hardware/"
+const HARDWARE_CATEGORY = "hardware"
+const HARDWARE_FOUNDATION = "@ui95/hardware"
+const DEMOS_DIR = "components/showcase/demos/"
 const SOURCE_DIRS = ["app", "components", "hooks", "lib", "scripts"]
 const SOURCE_EXTENSIONS = [".ts", ".tsx", ".mjs"]
 const PLATFORM_PACKAGES = new Set(["react", "react-dom", "next"])
@@ -133,7 +137,18 @@ function findRegistryViolations() {
   for (const item of REGISTRY.items) {
     const declared = new Set(item.registryDependencies ?? [])
     const npmDeclared = new Set(item.dependencies ?? [])
-    if ((item.type === "registry:ui" || item.type === "registry:block") && !declared.has("@ui95/theme")) {
+    const isHardware = item.categories?.includes(HARDWARE_CATEGORY) ?? false
+    if (isHardware) {
+      if (declared.has("@ui95/theme")) {
+        violations.push({ path: "registry.json", line: 0, rule: "hardware-skips-theme", found: item.name, why: "Hardware95 parts carry scoped tokens and must not restyle the host app" })
+      }
+      if (item.name !== "hardware" && !declared.has(HARDWARE_FOUNDATION)) {
+        violations.push({ path: "registry.json", line: 0, rule: "hardware-depends-on-foundation", found: item.name, why: `every Hardware95 part needs ${HARDWARE_FOUNDATION} for its tokens` })
+      }
+      if (npmDeclared.has("radix-ui")) {
+        violations.push({ path: "registry.json", line: 0, rule: "hardware-skips-radix", found: item.name, why: "Hardware95 parts serve every shadcn base, so they import no radix-ui" })
+      }
+    } else if ((item.type === "registry:ui" || item.type === "registry:block") && !declared.has("@ui95/theme")) {
       violations.push({ path: "registry.json", line: 0, rule: "registry-depends-on-theme", found: item.name, why: "every component needs the theme tokens and utilities" })
     }
     for (const file of item.files ?? []) {
@@ -192,6 +207,14 @@ function findRoadmapViolations() {
   return violations
 }
 
+function isHardwareFile(file) {
+  if (file.startsWith(HARDWARE_DIR)) {
+    return true
+  }
+  const demo = file.startsWith(DEMOS_DIR) ? file.slice(DEMOS_DIR.length).replace(/\.tsx$/, "") : null
+  return REGISTRY.items.some((item) => item.name === demo && item.categories?.includes(HARDWARE_CATEGORY))
+}
+
 function checkStyle() {
   const violations = []
   for (const directory of SOURCE_DIRS) {
@@ -199,7 +222,7 @@ function checkStyle() {
       const text = readFileSync(path, "utf8")
       const file = relative(ROOT, path)
       violations.push(...findComments(file, text))
-      if (file.startsWith("components/") || file.startsWith("app/")) {
+      if ((file.startsWith("components/") || file.startsWith("app/")) && !isHardwareFile(file)) {
         violations.push(...findClassViolations(file, text))
       }
     }

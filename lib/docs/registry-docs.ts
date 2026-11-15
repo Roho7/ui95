@@ -4,12 +4,13 @@ import type { DocSection, RegistryDoc } from "./types"
 export const REGISTRY_DOCS = generated as RegistryDoc[]
 
 export const SECTION_LABELS: Record<DocSection, string> = {
+  hardware: "Hardware95",
   components: "Components",
   blocks: "Blocks",
   utilities: "Utilities",
 }
 
-export const SECTION_ORDER: readonly DocSection[] = ["components", "blocks", "utilities"]
+export const SECTION_ORDER: readonly DocSection[] = ["hardware", "components", "blocks", "utilities"]
 
 const DOCS_BY_NAME = new Map(REGISTRY_DOCS.map((doc) => [doc.name, doc]))
 

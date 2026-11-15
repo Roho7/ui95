@@ -24,6 +24,7 @@ import { demo as dropdownMenuDemo } from "./demos/dropdown-menu"
 import { demo as emptyDemo } from "./demos/empty"
 import { demo as errorDialogDemo } from "./demos/error-dialog"
 import { demo as fieldDemo } from "./demos/field"
+import { demo as hardwareDemo } from "./demos/hardware"
 import { demo as highlightedTextDemo } from "./demos/highlighted-text"
 import { demo as hoverCardDemo } from "./demos/hover-card"
 import { demo as inputDemo } from "./demos/input"
@@ -74,6 +75,12 @@ export const SHOWCASE_ENTRIES: readonly ShowcaseEntry[] = [
     title: "Dither shine",
     description: "A two-color Bayer-dithered band that sweeps corner to corner at a stepped frame rate.",
     demo: ditherShineDemo,
+  },
+  {
+    name: "hardware",
+    title: "Hardware95 foundation",
+    description: "The base of every Hardware95 part: shared material, legend, accent, bevel and shadow tokens, a matte plastic Faceplate in putty, cream or khaki, printed Legend text and a glass pilot Lamp.",
+    demo: hardwareDemo,
   },
   {
     name: "button",
