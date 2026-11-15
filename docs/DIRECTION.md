@@ -1,8 +1,8 @@
-# Direction: from retro component library to retro hardware
+# Direction: from retro component library to Hardware95
 
-UI95 today is a shadcn registry of Win95-style reskins: 57 `registry:ui` items, 5 blocks, a theme and a sound engine. The goal is to make UI95 the place to get funky retro hardware controls, such as knobs, dials, meters, switches and displays, the way [SPEC-01](https://spec-01.vercel.app/) is for modern pocket-instrument hardware. The classic library stays installable and documented, but the site and the roadmap put hardware first.
+UI95 today is a shadcn registry of Win95-style reskins: 57 `registry:ui` items, 5 blocks, a theme and a sound engine. The goal is to sell the retro feel through Hardware95, a line of funky retro hardware controls such as knobs, dials, meters, switches and displays. [SPEC-01](https://spec-01.vercel.app/) does the same for modern pocket-instrument hardware. The classic library stays installable and documented, but the site and the roadmap put Hardware95 first.
 
-This doc covers what SPEC-01 ships and how, what UI95 keeps, changes and adds, the distribution model, the first components, the site restructure and a phased PR plan. Open questions for Rohosen are at the end.
+This doc covers what SPEC-01 ships and how, what UI95 keeps, changes and adds, the distribution model, the first components, the site restructure and a phased PR plan. The decisions Rohosen made on 2026-11-15 are folded in, and the questions still open are at the end.
 
 Research date: 2026-11-15. SPEC-01 is two days old (its repo was created on 2026-11-13), so check the counts below again before quoting them.
 
@@ -101,99 +101,102 @@ The homepage's primary install action is not a CLI command. An "Installation pro
 
 SPEC-01 owns the light, molded, modern pocket-instrument look, and it reinterprets every standard control. UI95 should not chase that breadth. SPEC-01 reached 61 components in about two days, so a race on count is one UI95 loses (inference from the repo's creation date).
 
-UI95's lane is the hardware of the 70s to 90s, drawn in its existing 1-bit language. Think of bakelite knobs shaded with dither instead of gradients, phosphor and segment readouts, chunky lever toggles, piano-key tape transport buttons, needles that move in steps. No other registry has that look, and UI95 already has the tools for it (dither, CRT shader, stepped motion, synthesized sound).
+Hardware95's lane is the hi-fi and lab gear of the 70s to 90s, rendered so it looks real. Think of brushed aluminium faceplates, knurled machined knobs, VU meters behind glass, chrome bat-handle toggles, piano-key tape transport buttons and glowing segment readouts. Each one has a material, takes light from one direction, casts a shadow and answers a press or a turn with travel, a click and a sound. It is not flat pixel art. The pixel look stays with the classic library.
 
-The second difference is scope. The classic library already covers standard controls. Hardware items should be controls with no good web equivalent, the kind someone installs because they want that one funky thing in an otherwise normal app.
+The second difference is scope. The classic library already covers standard controls. Hardware95 items are controls with no good web equivalent, the kind someone installs because they want that one tactile thing in an otherwise normal app.
 
 ## Keep, change, add
 
 ### Keep
 
 - The shadcn registry, the generated docs pipeline (`generate-registry-docs.mjs`), the sound meta pipeline and `npm run verify`.
-- The design rules: four inks, no alpha, stepped motion and dither for shading. They are what make UI95 hardware look unlike SPEC-01.
 - The sound engine and `/sound-lab`. Knobs and dials are what `step()` detents were built for.
-- Every classic item, its URL and its install command. Nothing classic is removed or renamed.
+- Every classic item, its URL and its install command, and the classic design rules in [`DESIGN.md`](DESIGN.md) for those items. Nothing classic is removed or renamed.
 
 ### Change
 
-- **Hardware must not take over the host app's theme.** SPEC-01 scopes everything under one root attribute. That lets a developer drop one knob into a stock shadcn app. UI95 hardware items should do the same, with a scoped root that carries its own inks and no dependency on `theme`.
-- **Round is allowed for hardware, drawn as pixels.** Knobs and gauges are round. Extend `check-style.mjs` so hardware items may be round only through stepped pixel circles (`clip-path` polygons as in `avatar`, or SVG with `shape-rendering="crispEdges"`), never `rounded-*`.
-- **The base refusal moves from per URL to per item.** Hardware items will not import `radix-ui`, so they can serve `base-*` projects too. The route should refuse only items that need Radix.
-- **Hardware items are tagged.** Add `"categories": ["hardware"]` to their registry entries. The docs generator and the catalogue split on it instead of on `type`, since a knob is still a `registry:ui`.
+- **Hardware95 has its own visual rules.** The classic rules (four inks, no alpha, no gradients, square corners, stepped motion) do not apply to it. Hardware95 uses one light source from the top-left, layered shadows that agree with it, materials built from gradients and highlights, and motion that behaves like the physical part. A knob cap follows the pointer with no easing, a needle swings and settles, a key travels down and springs back, and an LED switches on at once.
+- **Hardware95 has one accent.** A `--hw-lamp` token colors lit LEDs and the red button. Everything else is material: metal, plastic, glass and paint.
+- **Hardware95 must not take over the host app's theme.** SPEC-01 scopes everything under one root attribute. That lets a developer drop one knob into a stock shadcn app. Every Hardware95 part carries its own scoped tokens and has no dependency on `theme`.
+- **`check-style.mjs` splits by line.** The classic class rules apply to classic directories only. Hardware95 items get their own checks, which say that they depend on `@ui95/hardware` and never on `@ui95/theme`.
+- **The base refusal moves from per URL to per item.** Hardware95 items will not import `radix-ui`, so they can serve `base-*` projects too. The route should refuse only items that need Radix.
+- **Hardware95 items are tagged.** Add `"categories": ["hardware"]` to their registry entries. The docs generator and the catalogue split on it instead of on `type`, since a knob is still a `registry:ui`.
+- **The Win95 desktop becomes a block.** It stops being the home page and ships as an installable `registry:block`, like shadcn's ready-made blocks.
 
 ### Add
 
-- A `hardware` foundation item: the scoped root (`<Faceplate>`), its tokens, a `Lamp` LED, and one shared hook for rotary input (pointer drag, wheel, arrow keys, `role="slider"` with `aria-valuenow`). Every round control reuses the hook. `attachSoundSlots` already turns `aria-valuenow` changes into detent ticks for `slider`, so a knob gets its sound by mapping one more `data-slot`.
+- A `hardware` foundation item: scoped tokens, a `Faceplate` in a few finishes and a `Lamp` LED.
+- One shared rotary-input hook (pointer drag, wheel, arrow keys, `role="slider"` with `aria-valuenow`). It ships with `rotary-knob` first and moves to a shared file when `rotary-dial` becomes its second caller. `attachSoundSlots` already turns `aria-valuenow` changes into detent ticks for `slider`, so a knob gets its sound by mapping one more `data-slot`.
 - A `haptics` lib item wired to the same slot events as sound, with the same opt-in model. The browser technique is public (Vibration API, and the iOS 18 switch-input haptic). Write UI95's own implementation.
-- Devices: blocks that compose hardware into a working mini-app on a faceplate with a model plate, published as `registry:block` with their own page.
-- An agent install prompt beside the CLI command, and hardware items listed first in `llms.txt`.
+- Devices: blocks that compose Hardware95 parts into a working mini-app on a faceplate with a model plate, published as `registry:block` with their own page. The first is a tape deck.
+- An agent install prompt beside the CLI command, and Hardware95 items listed first in `llms.txt`.
 
 ## Distribution: keep the shadcn registry
 
-Ship hardware from the existing `@ui95` shadcn registry, under distinct item names, with an agent prompt as a second install path. Do not start an npm package.
+Ship Hardware95 from the existing `@ui95` shadcn registry, under distinct item names, with an agent prompt as a second install path. Do not start an npm package.
 
 | Option | For | Against |
 |---|---|---|
 | shadcn registry (recommended) | Already built and documented. Users own and restyle the source, which matters for visual one-offs. SPEC-01 shows the model works for hardware. | No semver updates. A user who edits a file has to merge upstream changes by hand. |
 | npm package | Versioned updates, one import. | Needs a CSS bundling story and a release process. Hides the source people want to tweak. Splits docs across two install paths. |
-| Separate registry (`@ui95-hardware`) | Clean split from classic. | A second registry URL to register, for no gain. Distinct item names already avoid collisions. |
+| Separate registry (`@hardware95`) | Clean split from classic. | A second registry URL to register, for no gain. Distinct item names already avoid collisions. |
 
 Details:
 
 - Names must not collide with classic items. Use `rotary-knob`, `lever-switch` and so on, never a bare `switch` or `slider`.
-- Each hardware item depends on the `hardware` foundation item, not on `theme`. Keep the foundation small so one knob does not pull half a megabyte, unlike SPEC-01's `hardware` item.
+- Each Hardware95 item depends on the `hardware` foundation item, not on `theme`. Keep the foundation small so one knob does not pull half a megabyte, unlike SPEC-01's `hardware` item.
+- Each item ships its styles as a plain CSS file next to its component, scoped to `[data-hw]`. Realistic materials need layered gradients and shadow stacks that read badly as Tailwind arbitrary values, and a CSS file keeps them editable.
 - Revisit npm only if people ask for a framework-agnostic build, for example web components.
 
 ## First components
 
-Seven controls, drawn from the roadmap's special list where they overlap. Each one is a single PR with its registry item, demo, sounds and roadmap tick.
+Seven controls, drawn from the roadmap's special list where they overlap. Each one is a single PR with its registry item, demo, sounds, roadmap tick and screenshots. Each must look like a photographed part at rest and feel like one under the pointer.
 
-1. **`rotary-knob`.** A continuous knob with a dithered bakelite cap and a pixel tick ring that turns by drag, wheel or arrow keys, with a detent sound per tick.
-2. **`rotary-dial`.** A stepped selector with printed stops around it that clicks from position to position and snaps to the nearest stop on release.
-3. **`lever-switch`.** A bat-handle toggle switch that throws between ON and OFF in two frames, with an optional flip-up safety cover.
-4. **`radial-meter`.** A needle gauge, such as a VU meter or a speedometer, whose needle moves toward the value in stepped frames with a little overshoot.
-5. **`segment-display`.** A seven-segment readout with unlit ghost segments in a dithered ink, for numbers and a small character set.
-6. **`tape-buttons`.** A row of piano-key transport buttons where pressing one latches it down and pops the others up. It covers the roadmap's `radio-buttons` too.
-7. **`red-button`.** A big domed push button under a hinged guard, with an optional hold-to-confirm ring that fills in steps.
+1. **`rotary-knob`.** A machined aluminium knob with a knurled grip over a printed scale. It turns by drag, wheel or arrow keys. The lighting on the cap stays put while the grip and the pointer line turn, and each step clicks.
+2. **`rotary-dial`.** A rotating stepped selector, a knob with detents over printed positions. It clicks from stop to stop, snaps to the nearest stop on release and plays a heavier click than the knob.
+3. **`lever-switch`.** A chrome bat-handle toggle that snaps between ON and OFF, with an optional flip-up safety cover.
+4. **`radial-meter`.** A VU meter behind glass with a backlit cream scale. The needle swings toward the value, overshoots a little and settles.
+5. **`segment-display`.** A seven-segment readout behind a smoked window, with faint unlit segments and a glow on lit ones.
+6. **`tape-buttons`.** A row of piano-key transport keys with a mechanical interlock. Pressing one latches it down and pops the others up. It covers the roadmap's `radio-buttons` too.
+7. **`red-button`.** A big domed red button under a hinged guard, with an optional hold-to-confirm ring.
 
-Later candidates from the roadmap and beyond: `crt-player` (built on `crt-screen`), `pov-keyboard`, `hold-to-speak`, a telephone rotary dial for digit input, nixie tubes, a cassette with turning reels, an oscilloscope trace and patch cables.
+Later candidates from the roadmap and beyond: `crt-player` (built on `crt-screen`), `pov-keyboard`, `hold-to-speak`, nixie tubes, a cassette with turning reels, an oscilloscope trace and patch cables.
 
 ## Website restructure
 
-The site should open on hardware, keep every existing URL working, and give the classic library its own home.
+The site opens on Hardware95 and keeps every existing URL working. The Win95 desktop leaves the home page and becomes a block.
 
 | Path | Today | After |
 |---|---|---|
-| `/` | Win95 desktop | Hardware landing: hero device, install, numbered panel grid |
-| `/devices/<name>` | None | One page per device |
-| `/classic` | None | The Win95 desktop, moved from `/` |
+| `/` | Win95 desktop | Hardware95 landing: tape deck hero, install, numbered panel grid |
+| `/devices/<name>` | None | One page per device, starting with `/devices/tape-deck` |
 | `/components` | Bento catalogue of everything | Classic catalogue, titled "Classic components" |
-| `/components/[name]` | Doc page per item | Unchanged, for hardware and classic items |
-| `/docs/*` | Four guides | Hardware getting-started first, classic installation and theming kept |
+| `/components/[name]` | Doc page per item | Unchanged, for Hardware95 and classic items. `/components/win95-desktop` shows the desktop block. |
+| `/docs/*` | Four guides | Hardware95 getting-started first, classic installation and theming kept |
 
 ### Hero
 
-One working device on a faceplate fills the first screen, for example a tape deck built from `tape-buttons`, `segment-display`, `radial-meter` and `rotary-knob`. A visitor can play with it before reading anything. Under it go one line of copy, the CLI command with a copy key, the agent prompt and a sound toggle.
+The tape deck fills the first screen, built from `tape-buttons`, `segment-display`, `radial-meter` and `rotary-knob`. A visitor can play with it before reading anything. Under it go one line of copy, the CLI command with a copy key, the agent prompt and a sound toggle. The site plays sound by default, and the toggle mutes it. Installers still opt in to sound in their own apps.
 
 ### Catalogue
 
-Below the hero sits a grid of numbered hardware panels, one live demo per panel, in UI95's own plate style. A panel's title links to its `/components/[name]` page. The grid can reuse `ShowcaseCatalogue` filtered by the `hardware` category.
+Below the hero sits a grid of numbered Hardware95 panels, one live demo per panel. A panel's title links to its `/components/[name]` page. The grid can reuse `ShowcaseCatalogue` filtered by the `hardware` category.
 
 ### Nav
 
-The nav order is Hardware (`/`), Devices, Docs, Classic and GitHub. Classic stays one click away, so the library remains easy to find without leading.
+The nav order is Hardware95 (`/`), Devices, Docs, Classic (`/components`) and GitHub. Classic stays one click away, so the library remains easy to find without leading.
 
 ### Docs sidebar
 
-The sidebar gets a Hardware group first, then Devices, then the existing Components, Blocks and Utilities groups, relabelled "Classic".
+The sidebar gets a Hardware95 group first, then Devices, then the existing Components, Blocks and Utilities groups, relabelled "Classic".
 
 ### Copy
 
-`SITE_TAGLINE`, `SITE_DESCRIPTION`, `SITE_KEYWORDS`, the README intro, the OG image and `llms.txt` change to lead with hardware.
+`SITE_TAGLINE`, `SITE_DESCRIPTION`, `SITE_KEYWORDS`, the README intro, the OG image and `llms.txt` change to lead with Hardware95.
 
 ## Phased plan
 
-Each step is one small PR that ships on its own and passes `npm run verify`. Steps 1 to 3 add no visible page change, so they can merge while the visuals are still in prototype.
+Each step is one small PR that ships on its own and passes `npm run verify`. Component PRs carry screenshots of the new part.
 
 **Phase 0: direction**
 
@@ -201,40 +204,33 @@ Each step is one small PR that ships on its own and passes `npm run verify`. Ste
 
 **Phase 1: foundation**
 
-2. Registry plumbing. The docs generator and the catalogue read `categories: ["hardware"]`. A Hardware sidebar group renders only when it has items.
-3. `check-style.mjs` rules for hardware: round shapes only through stepped pixel circles, and no `theme` dependency.
-4. The `hardware` item: `<Faceplate>` root with scoped tokens, `Lamp` and the shared rotary-input hook, with a showcase demo.
+2. The `hardware` item. It adds the `hardware` category to the docs generator and a Hardware95 sidebar group, the `check-style.mjs` split, scoped tokens, `Faceplate` and `Lamp`, with a showcase demo.
+3. `rotary-knob`, with the rotary-input hook and a detent sound.
 
 **Phase 2: first components**
 
-5. `rotary-knob`, the first consumer of the rotary hook and the detent sounds.
-6. `lever-switch`.
-7. `segment-display`.
-8. `radial-meter`.
-9. `tape-buttons`.
-10. `rotary-dial`.
-11. `red-button`.
-12. The `haptics` lib item, wired into the sound slot events of every item shipped so far.
+4. `rotary-dial`. Its rotary hook moves into a shared file.
+5. `lever-switch`.
+6. `segment-display`.
+7. `radial-meter`.
+8. `tape-buttons`.
+9. `red-button`.
+10. The `haptics` lib item, wired into the sound slot events of every item shipped so far.
 
 **Phase 3: site**
 
-13. Move the Win95 desktop from `/` to `/classic`. `/` temporarily shows the hardware catalogue grid.
-14. The hardware landing: hero device, install CLI and agent prompt, sound toggle and the numbered panel grid.
-15. Nav, sidebar labels, site copy, OG image and `llms.txt`.
+11. The Win95 desktop as a `win95-desktop` `registry:block`, with its demo. `/` keeps rendering it until the next step.
+12. The Hardware95 landing on `/`: install CLI and agent prompt, sound on by default with a mute toggle, and the numbered panel grid.
+13. Nav, sidebar labels, Hardware95 copy, OG image and `llms.txt`.
 
 **Phase 4: devices and reach**
 
-16. The first device block and its `/devices/<name>` page. It becomes the hero.
-17. Serve hardware items to `base-*` projects by refusing per item in `app/r/[style]/[file]/route.ts`.
-18. Further devices and the later candidate components, one PR each.
+14. The `tape-deck` device block and its `/devices/tape-deck` page. It becomes the hero.
+15. Serve Hardware95 items to `base-*` projects by refusing per item in `app/r/[style]/[file]/route.ts`.
+16. Further devices and the later candidate components, one PR each.
 
-Each component PR follows the README's "Add a component" checklist, and its author checks the component in one light and one dark palette in the browser. Build the first knob as a throwaway prototype before step 4 locks the shared hook's shape, as `ROADMAP.md` already asks for special components.
+Each component PR follows the README's "Add a component" checklist, and its author checks the component in the browser on every `Faceplate` finish.
 
 ## Open questions
 
-1. **Accent color.** SPEC-01's lit LEDs and keys use one key color. Should UI95 hardware stay strictly four-ink, or add one `--lamp` accent for LEDs and the red button? The recommended default is one accent token, still with no alpha.
-2. **Name.** Does the hardware line ship as "UI95" or under a sub-brand such as "UI95 Hardware", and what does the hero headline say?
-3. **The Win95 desktop.** Move it to `/classic` as proposed, or keep it reachable from the new landing as an easter egg, such as a CRT on the hero device that boots into it?
-4. **`rotary-dial`.** `ROADMAP.md` says "a rotating dial component". This doc reads it as a stepped selector and lists the telephone dial as a later item. Was the telephone dial the intent?
-5. **Sound default on the site.** SPEC-01 plays sound by default with a mute toggle. UI95 sound is opt-in for installers. Should the UI95 site itself play sound by default?
-6. **First device.** A tape deck is the proposal. Other options are a synth, a radio or a Geiger counter. Which one sells the line best?
+1. **Registry name and domain.** The default is to keep the `@ui95` namespace and `ui95.dev`, with Hardware95 as the name of the line. Should Hardware95 get its own domain or registry namespace instead?
