@@ -35,5 +35,8 @@
       "target": "@lib/dither/useInkVersion.ts"
     }
   ],
+  "categories": [
+    "ui"
+  ],
   "type": "registry:ui"
 }

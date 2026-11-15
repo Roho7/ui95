@@ -427,5 +427,8 @@
     }
   },
   "docs": "The default look pairs Silkscreen for titles and labels with VT323 for body text, both free on Google Fonts. Load those, or any pixel display font and monospace body font you prefer, and expose them as --font-display and --font-body (with next/font/google, pass them as the variable option). The data-theme attribute on <html> picks the palette, and the dark class switches it to dark mode.",
+  "categories": [
+    "ui"
+  ],
   "type": "registry:style"
 }

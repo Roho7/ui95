@@ -25,5 +25,8 @@
       "type": "registry:ui"
     }
   ],
+  "categories": [
+    "ui"
+  ],
   "type": "registry:lib"
 }

@@ -79,5 +79,8 @@
       }
     }
   },
+  "categories": [
+    "ui"
+  ],
   "type": "registry:ui"
 }

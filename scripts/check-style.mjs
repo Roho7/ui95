@@ -5,7 +5,7 @@ const ROOT = new URL("..", import.meta.url).pathname
 const REGISTRY = JSON.parse(readFileSync(join(ROOT, "registry.json"), "utf8"))
 const COMPONENT_DIRS = ["components/ui", "components/retro", "components/hardware"]
 const HARDWARE_DIR = "components/hardware/"
-const HARDWARE_CATEGORY = "hardware"
+const LIBRARY_CATEGORIES = ["hardware", "ui", "shared"]
 const HARDWARE_FOUNDATION = "@ui95/hardware"
 const DEMOS_DIR = "components/showcase/demos/"
 const SOURCE_DIRS = ["app", "components", "hooks", "lib", "scripts"]
@@ -137,7 +137,14 @@ function findRegistryViolations() {
   for (const item of REGISTRY.items) {
     const declared = new Set(item.registryDependencies ?? [])
     const npmDeclared = new Set(item.dependencies ?? [])
-    const isHardware = item.categories?.includes(HARDWARE_CATEGORY) ?? false
+    const libraries = (item.categories ?? []).filter((category) => LIBRARY_CATEGORIES.includes(category))
+    if (libraries.length !== 1) {
+      violations.push({ path: "registry.json", line: 0, rule: "registry-one-library", found: `${item.name}: ${libraries.join(", ") || "none"}`, why: `every item belongs to exactly one library category: ${LIBRARY_CATEGORIES.join(", ")}` })
+    }
+    if (libraries[0] === "shared" && declared.has("@ui95/theme")) {
+      violations.push({ path: "registry.json", line: 0, rule: "shared-skips-theme", found: item.name, why: "shared items serve both libraries, so they cannot pull in the UI95 theme" })
+    }
+    const isHardware = libraries[0] === "hardware"
     if (isHardware) {
       if (declared.has("@ui95/theme")) {
         violations.push({ path: "registry.json", line: 0, rule: "hardware-skips-theme", found: item.name, why: "Hardware95 parts carry scoped tokens and must not restyle the host app" })
@@ -212,7 +219,7 @@ function isHardwareFile(file) {
     return true
   }
   const demo = file.startsWith(DEMOS_DIR) ? file.slice(DEMOS_DIR.length).replace(/\.tsx$/, "") : null
-  return REGISTRY.items.some((item) => item.name === demo && item.categories?.includes(HARDWARE_CATEGORY))
+  return REGISTRY.items.some((item) => item.name === demo && item.categories?.includes("hardware"))
 }
 
 function checkStyle() {

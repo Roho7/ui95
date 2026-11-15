@@ -18,5 +18,8 @@
       "type": "registry:ui"
     }
   ],
+  "categories": [
+    "ui"
+  ],
   "type": "registry:ui"
 }

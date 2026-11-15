@@ -14,5 +14,8 @@
       "target": "@lib/dither/inks.ts"
     }
   ],
+  "categories": [
+    "ui"
+  ],
   "type": "registry:lib"
 }
