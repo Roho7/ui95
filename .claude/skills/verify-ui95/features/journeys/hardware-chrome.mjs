@@ -18,7 +18,10 @@ export default async function verifyHardwareChrome({ page, baseUrl, evidenceDir,
   expect("/components/hardware redirects to /hardware/hardware", new URL(page.url()).pathname === "/hardware/hardware", page.url())
 
   await page.goto(`${baseUrl}/hardware`, { waitUntil: "networkidle" })
-  expect("the catalogue shows one tile per Hardware95 part", (await page.locator('[data-part="hw-tile"]').count()) === 2)
+  const registry = await (await page.request.get(`${baseUrl}/r/registry.json`)).json()
+  const partCount = registry.items.filter((item) => item.categories?.includes("hardware")).length
+  const tileParts = new Set(await page.locator('[data-part="hw-tile-head"] a').allTextContents())
+  expect("the catalogue shows every Hardware95 part", tileParts.size === partCount, `${tileParts.size} of ${partCount}`)
   expect("the catalogue renders no Win95 chrome", (await page.locator(WIN95_CHROME).count()) === 0)
   await page.screenshot({ path: join(evidenceDir, "catalogue.png") })
 

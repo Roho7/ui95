@@ -388,3 +388,20 @@
     transition: none;
   }
 }
+
+[data-part="hw-bento"] {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 340px), 1fr));
+  grid-auto-flow: dense;
+  gap: 24px;
+}
+
+[data-part="hw-bento"] [data-part="hw-tile"][data-wide] {
+  grid-column: span 2;
+}
+
+@media (max-width: 900px) {
+  [data-part="hw-bento"] [data-part="hw-tile"][data-wide] {
+    grid-column: auto;
+  }
+}
