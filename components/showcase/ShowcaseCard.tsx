@@ -5,7 +5,6 @@ import type { CSSProperties } from "react"
 import { Window } from "@/components/retro/window"
 import { docHref } from "@/lib/docs/routes"
 
-import { InstallCommand } from "./InstallCommand"
 import type { ShowcaseEntry, ShowcaseSpan, ShowcaseVariant } from "./types"
 
 type SpanLayout = {
@@ -75,15 +74,14 @@ function ShowcaseCard({ entry, index }: ShowcaseCardProps) {
       statusBar={
         <>
           <Link href={docHref(name)} className="hover:underline">
-            Docs
+            Control panel
           </Link>
           <span className="ml-auto">{demo.variants.length} variants</span>
         </>
       }
     >
-      <div className="flex flex-col gap-3 border-b-(length:--pixel) border-border p-3">
+      <div className="border-b-(length:--pixel) border-border p-3">
         <p className="text-xl leading-tight">{description}</p>
-        <InstallCommand name={name} />
       </div>
       <div
         style={cellGridStyle}
