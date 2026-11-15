@@ -94,6 +94,7 @@ Realistic retro hardware in matte beige-box plastic: one light source, soft shad
 
 - [x] hardware: plastic faceplate finishes, printed legends, a pilot lamp and the shared tokens
 - [x] rotary-knob: a charcoal skirted or pointer knob over a printed scale
+- [x] crt-monitor: a beige monitor housing whose curved CRT runs whatever you put inside
 - [ ] rotary-dial: a rotating stepped selector, a knob with detents
 - [ ] lever-switch: a bat-handle toggle with an optional safety cover
 - [ ] radial-meter: a VU meter whose needle swings and settles
