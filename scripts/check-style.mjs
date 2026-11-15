@@ -55,6 +55,22 @@ const CLASS_RULES = [
   },
 ]
 
+const ARROW_DIRS = ["app/", "components/", "lib/"]
+const ARROW_PATTERN = /[\u2190-\u21FF\u2794-\u27BF\u27F0-\u27FF\u2900-\u297F\u00AB\u00BB]|->/g
+
+function findArrowViolations(path, text) {
+  if (!ARROW_DIRS.some((directory) => path.startsWith(directory)) || !/\.tsx?$/.test(path)) {
+    return []
+  }
+  const violations = []
+  text.split("\n").forEach((line, index) => {
+    for (const match of line.matchAll(ARROW_PATTERN)) {
+      violations.push({ path, line: index + 1, rule: "no-text-arrows", found: match[0], why: "labels, links, buttons and headings use the plain label; signal direction with an icon component or the part's own affordance" })
+    }
+  })
+  return violations
+}
+
 const COMMENT_PATTERN = /(^|[^:"'`\\])\/\/(?!\/?\s*<reference)|\/\*|\{\s*\/\*/
 
 function listFiles(directory) {
@@ -229,6 +245,7 @@ function checkStyle() {
       const text = readFileSync(path, "utf8")
       const file = relative(ROOT, path)
       violations.push(...findComments(file, text))
+      violations.push(...findArrowViolations(file, text))
       if ((file.startsWith("components/") || file.startsWith("app/")) && !isHardwareFile(file)) {
         violations.push(...findClassViolations(file, text))
       }
