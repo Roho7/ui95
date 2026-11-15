@@ -16,6 +16,7 @@ import { useSoundEnabled } from "@/hooks/use-sound"
 import type { Library, RegistryDoc } from "@/lib/docs/types"
 import { deriveControls, initialValues, type PanelControl, type PanelValue } from "@/lib/panel/controls"
 
+import { type FolderEntry, FolderWindow } from "./FolderWindow"
 import { PANEL_SPECS } from "./specs"
 
 export type PanelDoc = Pick<RegistryDoc, "name" | "title" | "description" | "library" | "api" | "sounds" | "registryDependencies" | "dependencies">
@@ -136,7 +137,7 @@ function useStage(doc: PanelDoc) {
   return { spec, controls, variants }
 }
 
-function ControlPanel({ doc }: { doc: PanelDoc }) {
+function ControlPanel({ doc, folders }: { doc: PanelDoc; folders: readonly FolderEntry[] }) {
   const { spec, controls, variants } = useStage(doc)
   const frame = SKIN[doc.library]
   const [values, setValues] = React.useState(() => initialValues(controls))
@@ -202,6 +203,7 @@ function ControlPanel({ doc }: { doc: PanelDoc }) {
             <dd>{doc.sounds.join(", ") || "none"}</dd>
           </dl>
         </Box>
+        <FolderWindow entries={folders} current={doc.name} />
       </div>
     </div>
   )

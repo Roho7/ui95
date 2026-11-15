@@ -3,7 +3,7 @@ import { notFound } from "next/navigation"
 
 import { ControlPanel, type PanelDoc } from "@/components/panel/ControlPanel"
 import { markdownUrl } from "@/lib/docs/llms"
-import { findDoc, REGISTRY_DOCS } from "@/lib/docs/registry-docs"
+import { findDoc, REGISTRY_DOCS, SECTION_LABELS } from "@/lib/docs/registry-docs"
 import { docHref } from "@/lib/docs/routes"
 import type { RegistryDoc } from "@/lib/docs/types"
 import { pageMetadata } from "@/lib/seo"
@@ -15,6 +15,13 @@ type PanelPageProps = {
 export const dynamicParams = false
 
 const DOCS = REGISTRY_DOCS.filter((doc) => doc.library === "hardware95")
+
+const FOLDERS = DOCS.map((doc) => ({
+  name: doc.name,
+  title: doc.title,
+  group: doc.library === "hardware95" ? "Parts" : SECTION_LABELS[doc.section],
+  href: docHref(doc.name),
+}))
 
 export function generateStaticParams() {
   return DOCS.map((doc) => ({ name: doc.name }))
@@ -48,5 +55,5 @@ export default async function PanelPage({ params }: PanelPageProps) {
     registryDependencies: doc.registryDependencies,
     dependencies: doc.dependencies,
   }
-  return <ControlPanel key={doc.name} doc={panelDoc} />
+  return <ControlPanel key={doc.name} doc={panelDoc} folders={FOLDERS} />
 }

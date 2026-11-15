@@ -9,11 +9,12 @@
   box-sizing: border-box;
   display: grid;
   grid-template-columns: minmax(0, 1fr) clamp(260px, 26vw, 360px);
-  grid-template-rows: auto minmax(0, 1fr) minmax(96px, 18%);
+  grid-template-rows: auto minmax(0, 1.25fr) minmax(0, 1fr) minmax(112px, 18%);
   grid-template-areas:
     "header header"
     "stage controls"
-    "readout readout";
+    "stage folders"
+    "readout folders";
   gap: 10px;
   padding: 12px;
 }
@@ -320,7 +321,103 @@
 
   [data-part="panel-screen"] {
     grid-template-columns: minmax(0, 1fr);
-    grid-template-rows: auto minmax(320px, 60dvh) auto auto;
-    grid-template-areas: "header" "stage" "controls" "readout";
+    grid-template-rows: auto minmax(320px, 60dvh) auto auto minmax(280px, 50dvh);
+    grid-template-areas: "header" "stage" "controls" "readout" "folders";
   }
+}
+
+[data-part="panel-folders"] {
+  grid-area: folders;
+}
+
+[data-part="panel-folders-bar"] input {
+  width: min(55%, 180px);
+  padding: 1px 6px;
+}
+
+[data-part="panel-folder-group"] ul {
+  list-style: none;
+  margin: 0 0 8px;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(76px, 1fr));
+  gap: 6px;
+}
+
+[data-part="panel-folder-heading"] {
+  margin: 0 0 6px;
+  text-transform: uppercase;
+}
+
+[data-part="panel-folder"] {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  padding: 6px 2px;
+  color: inherit;
+  text-align: center;
+  text-decoration: none;
+  font-size: 0.85em;
+  line-height: 1.1;
+  word-break: break-word;
+}
+
+[data-part="panel-folder-icon"] {
+  position: relative;
+  width: 30px;
+  height: 22px;
+  margin-top: 4px;
+  border: 1.5px solid currentColor;
+}
+
+[data-part="panel-folder-icon"]::before {
+  content: "";
+  position: absolute;
+  left: -1.5px;
+  top: -6px;
+  width: 12px;
+  height: 5px;
+  border: 1.5px solid currentColor;
+  border-bottom: 0;
+}
+
+[data-part="panel-folder"][aria-current="page"],
+[data-part="panel-folder"]:hover {
+  outline: 1.5px dashed currentColor;
+  outline-offset: -1px;
+}
+
+[data-skin="instrument"] [data-part="panel-folders-bar"] input {
+  border-color: var(--panel-ground);
+  color: var(--panel-ground);
+}
+
+[data-skin="instrument"] [data-part="panel-folders-bar"] input::placeholder {
+  color: color-mix(in oklab, var(--panel-ground) 60%, transparent);
+}
+
+[data-skin="instrument"] [data-part="panel-folder"][aria-current="page"] [data-part="panel-folder-icon"] {
+  background: var(--panel-ink);
+}
+
+[data-skin="instrument"] [data-part="panel-folder-heading"] {
+  color: var(--panel-ink-dim);
+  font-family: var(--hw-font);
+  font-size: 11px;
+  letter-spacing: 0.12em;
+}
+
+[data-skin="win95"] [data-part="panel-folders-bar"] input {
+  background: var(--background);
+  color: var(--foreground);
+}
+
+[data-skin="win95"] [data-part="panel-folder"][aria-current="page"] [data-part="panel-folder-icon"] {
+  background: var(--foreground);
+}
+
+[data-skin="win95"] [data-part="panel-folder-heading"] {
+  font-family: var(--font-pixel);
+  font-size: 13px;
 }
