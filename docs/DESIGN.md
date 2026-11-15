@@ -67,7 +67,7 @@ type ShaderMountColors = Record<string, ShaderColorParam>
 type ShaderPreset<Params> = { name: string; params: Params }
 ```
 
-- **`ShaderMount`** (`lib/shaders/shader-mount.ts`) is framework-agnostic. `ShaderMount.create(parent, fragmentShader, uniforms, colors, motion)` returns `null` instead of throwing when WebGL2 or the program is unavailable. Each mount owns one canvas and one WebGL2 context, draws a fullscreen triangle from `gl_VertexID`, sizes the canvas to the parent in device pixels with a `ResizeObserver`, and pauses on an `IntersectionObserver` and `document.hidden`. `setUniforms`, `setColors`, `setSpeed`, `setFps`, `setFrame` and `dispose`. Uniform writes are diffed. Built-in uniforms are `u_time` (seconds), `u_resolution`, `u_pixelRatio` and `u_pxSize`.
+- **`ShaderMount`** (`lib/shaders/shader-mount-core.ts`) is framework-agnostic. `ShaderMount.create(parent, fragmentShader, uniforms, colors, motion)` returns `null` instead of throwing when WebGL2 or the program is unavailable. Each mount owns one canvas and one WebGL2 context, draws a fullscreen triangle from `gl_VertexID`, sizes the canvas to the parent in device pixels with a `ResizeObserver`, and pauses on an `IntersectionObserver` and `document.hidden`. `setUniforms`, `setColors`, `setSpeed`, `setFps`, `setFrame` and `dispose`. Uniform writes are diffed. Built-in uniforms are `u_time` (seconds), `u_resolution`, `u_pixelRatio` and `u_pxSize`.
 - **One module per shader** in `lib/shaders/<name>.ts` exports `<name>FragmentShader`, `<Name>Uniforms` (GPU side), `<Name>Colors`, `<Name>Params` (user side), enum maps such as `DitherShineTypes`, `defaultPreset` and `<name>Presets`.
 - **React** has a thin `components/ui/shader-mount.tsx` that creates the mount in an effect and pushes only the uniforms and colors whose props changed, and one `memo` component per shader that maps params to uniforms with defaults from `defaultPreset`. `onMountChange` hands the vanilla mount to a parent that drives uniforms imperatively.
 
@@ -97,7 +97,7 @@ Sound is opt-in: components never import it. Installing `@ui95/sound` and render
 | `pixel-glyphs` | `registry:lib` | Check, minus, close, chevron, arrow, dot, radio and error glyphs plus 16x16 folder, document and terminal icons |
 | `dither-inks` | `registry:lib` | `lib/dither/inks.ts`: the color probe and the theme observer |
 | `dither-image` | `registry:ui` | Image dithering component plus the rest of `lib/dither` |
-| `shader-mount` | `registry:lib` | `lib/shaders/types.ts`, `lib/shaders/shader-mount.ts` and `components/ui/shader-mount.tsx` |
+| `shader-mount` | `registry:lib` | `lib/shaders/types.ts`, `lib/shaders/shader-mount-core.ts` and `components/ui/shader-mount.tsx` |
 | `dither-shine` | `registry:ui` | `lib/shaders/dither-shine.ts` and its `DitherShine` component |
 | `cta-button` | `registry:ui` | Call-to-action button over `dither-shine` |
 | `sound` | `registry:lib` | `lib/sound/*`, `hooks/use-sound.ts`, `<Ui95Sounds />`, a starter `sounds.json` and `scripts/95-sound-lib.mjs` |

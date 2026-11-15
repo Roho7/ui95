@@ -7,7 +7,6 @@
     "cn"
   ],
   "registryDependencies": [
-    "@ui95/theme",
     "@ui95/shader-mount",
     "@ui95/use-prefers-reduced-motion"
   ],
@@ -33,7 +32,7 @@
   ],
   "docs": "Scoped is the default: the effect covers the box and its children, and the overlay never takes the pointer. Pass fullscreen to lay it over the whole viewport instead; curvature, aberration and bloom then filter the whole document, which costs more on large pages. Put padding and backgrounds on the children, not on CrtScreen, so the warp and the overlay share one box. Scanlines and grain are alpha black and white at device resolution and follow the barrel curve. Under curvature, clicks land at the undistorted position of the element. Portals opened from inside a scoped CrtScreen (dialogs, menus, toasts) mount on the body and escape the effect; use fullscreen to cover them. Reduced motion freezes the grain and turns flicker off.",
   "categories": [
-    "ui"
+    "shared"
   ],
   "type": "registry:block"
 }

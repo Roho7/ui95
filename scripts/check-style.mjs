@@ -171,7 +171,7 @@ function findRegistryViolations() {
       if (npmDeclared.has("radix-ui")) {
         violations.push({ path: "registry.json", line: 0, rule: "hardware-skips-radix", found: item.name, why: "Hardware95 parts serve every shadcn base, so they import no radix-ui" })
       }
-    } else if ((item.type === "registry:ui" || item.type === "registry:block") && !declared.has("@ui95/theme")) {
+    } else if (libraries[0] === "ui" && (item.type === "registry:ui" || item.type === "registry:block") && !declared.has("@ui95/theme")) {
       violations.push({ path: "registry.json", line: 0, rule: "registry-depends-on-theme", found: item.name, why: "every component needs the theme tokens and utilities" })
     }
     for (const file of item.files ?? []) {

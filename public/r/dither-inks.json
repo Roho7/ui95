@@ -3,9 +3,6 @@
   "name": "dither-inks",
   "title": "Dither inks",
   "description": "Reads theme colors through a canvas probe and observes <html> for theme changes.",
-  "registryDependencies": [
-    "@ui95/theme"
-  ],
   "files": [
     {
       "path": "lib/dither/inks.ts",
@@ -15,7 +12,7 @@
     }
   ],
   "categories": [
-    "ui"
+    "shared"
   ],
   "type": "registry:lib"
 }

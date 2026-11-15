@@ -2,7 +2,7 @@
 
 import * as React from "react"
 
-import { isSameUniformValue, ShaderMount as ShaderMountVanilla } from "@/lib/shaders/shader-mount"
+import { isSameUniformValue, ShaderMount as ShaderMountVanilla } from "@/lib/shaders/shader-mount-core"
 import type {
   ShaderMotionParams,
   ShaderMountColors,
