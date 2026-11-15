@@ -27,6 +27,11 @@ export function generateStaticParams() {
   return DOCS.map((doc) => ({ name: doc.name }))
 }
 
+function readImportPath(doc: RegistryDoc): string | null {
+  const source = doc.files.find((file) => file.path.endsWith(".tsx"))
+  return source ? `@/${source.path.replace(/\.tsx$/, "")}` : null
+}
+
 function readDoc(name: string): RegistryDoc | undefined {
   return DOCS.some((doc) => doc.name === name) ? findDoc(name) : undefined
 }
@@ -54,6 +59,8 @@ export default async function PanelPage({ params }: PanelPageProps) {
     sounds: doc.sounds,
     registryDependencies: doc.registryDependencies,
     dependencies: doc.dependencies,
+    href: docHref(doc.name),
+    importPath: readImportPath(doc),
   }
   return <ControlPanel key={doc.name} doc={panelDoc} folders={FOLDERS} />
 }
