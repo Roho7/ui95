@@ -1,11 +1,11 @@
 ---
 name: write-ui95-docs
-description: Write or rewrite a UI95 docs guide page under app/(docs)/docs in the house voice. Use when adding a guide (like Sound, Theming, Installation), when a docs page reads poorly, or when asked to "write the docs for X" on this site.
+description: Write or rewrite a UI95 docs guide page under app/(ui95)/(docs)/docs in the house voice. Use when adding a guide (like Sound, Theming, Installation), when a docs page reads poorly, or when asked to "write the docs for X" on this site.
 ---
 
 # Write a UI95 docs page
 
-The reference page is `app/(docs)/docs/sound/page.tsx`. Read it first and match it.
+The reference page is `app/(ui95)/(docs)/docs/sound/page.tsx`. Read it first and match it.
 
 ## Before writing
 
@@ -30,7 +30,7 @@ The reference page is `app/(docs)/docs/sound/page.tsx`. Read it first and match 
 ## Wiring a new guide page
 
 1. Add `{ href, title, description }` to `GUIDE_PAGES` in `lib/docs/pages.ts`. The sidebar, search, prev/next links, sitemap and `llms.txt` pick it up.
-2. Create `app/(docs)/docs/<slug>/page.tsx` with `PageHeader`, `DocSection`s and `PageNeighbors`, reading its entry from `GUIDE_PAGES`.
+2. Create `app/(ui95)/(docs)/docs/<slug>/page.tsx` with `PageHeader`, `DocSection`s and `PageNeighbors`, reading its entry from `GUIDE_PAGES`.
 3. Link to it from any older page that covered the topic briefly.
 4. Do not link the Sound Lab.
 

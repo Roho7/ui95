@@ -10,7 +10,6 @@ import { SITE_AUTHOR, SITE_DESCRIPTION, SITE_KEYWORDS, SITE_NAME, SITE_TAGLINE, 
 import { cn } from "@/lib/utils"
 
 import { RESTORE_CRT_SCRIPT } from "./_site/crt"
-import { CrtSite } from "./_site/CrtSite"
 import { RESTORE_PALETTE_SCRIPT } from "./_site/palettes"
 
 const fontPixel = Silkscreen({
@@ -72,7 +71,6 @@ export default function RootLayout({
         <ThemeProvider defaultTheme="light" enableSystem={false}>
           {children}
           <Ui95Sounds />
-          <CrtSite />
         </ThemeProvider>
       </body>
     </html>

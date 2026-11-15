@@ -27,7 +27,7 @@ function lastCommitDate(paths: readonly string[]): string | undefined {
 }
 
 function guideDate(href: string): string | undefined {
-  return lastCommitDate([`app/(docs)${href}/page.tsx`]) ?? LATEST_REGISTRY_DATE
+  return lastCommitDate([`app/(ui95)/(docs)${href}/page.tsx`]) ?? LATEST_REGISTRY_DATE
 }
 
 export default function sitemap(): MetadataRoute.Sitemap {

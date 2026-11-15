@@ -238,6 +238,17 @@ function isHardwareFile(file) {
   return REGISTRY.items.some((item) => item.name === demo && item.categories?.includes("hardware"))
 }
 
+const ROOT_LAYOUT = "app/layout.tsx"
+const ROOT_LAYOUT_IMPORTS = new Set(["./globals.css", "next", "next/font/google", "@/components/theme-provider", "@/components/ui/ui95-sounds", "@/lib/brand/keycap", "@/lib/site", "@/lib/utils", "./_site/crt", "./_site/palettes"])
+
+function findRootLayoutViolations() {
+  const text = readFileSync(join(ROOT, ROOT_LAYOUT), "utf8")
+  const specifiers = [...text.matchAll(/^import\s+(?:[^"']*\s+from\s+)?["']([^"']+)["']/gm)].map((match) => match[1])
+  return specifiers
+    .filter((specifier) => !ROOT_LAYOUT_IMPORTS.has(specifier))
+    .map((specifier) => ({ path: ROOT_LAYOUT, line: 0, rule: "root-layout-stays-bare", found: specifier, why: "the root layout serves Hardware95 and UI95 alike; chrome and anything that paints belongs in a route group layout" }))
+}
+
 function checkStyle() {
   const violations = []
   for (const directory of SOURCE_DIRS) {
@@ -253,6 +264,7 @@ function checkStyle() {
   }
   violations.push(...findRegistryViolations())
   violations.push(...findRoadmapViolations())
+  violations.push(...findRootLayoutViolations())
   return violations
 }
 
