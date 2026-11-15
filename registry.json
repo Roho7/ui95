@@ -639,6 +639,36 @@
       ]
     },
     {
+      "name": "rotary-knob",
+      "type": "registry:ui",
+      "title": "Rotary knob",
+      "description": "A matte charcoal plastic knob with a white indicator line over a scale printed on the faceplate, as a skirted knob or a pointer knob. Turn it by dragging, scrolling or with the arrow keys, and it clicks at each tick.",
+      "docs": "variant=\"skirted\" | \"pointer\" picks the knob shape, and cap=\"red\" | \"amber\" | \"green\" | \"slate\" adds a coloured cap insert. Drag up or right to turn it up, and hold Shift for fine control. The wheel and the arrow keys move one step, Page Up and Page Down a tenth of the range, Home and End to the stops. It is a role=\"slider\", so screen readers announce its value. The light stays at the top-left while the knob turns. With the sound item installed, data-slot=\"rotary-knob\" plays knob.tick at each printed tick.",
+      "categories": [
+        "hardware"
+      ],
+      "registryDependencies": [
+        "@ui95/hardware"
+      ],
+      "files": [
+        {
+          "path": "components/hardware/rotary-knob.css",
+          "type": "registry:component",
+          "target": "@components/hardware/rotary-knob.css"
+        },
+        {
+          "path": "components/hardware/rotary-knob.tsx",
+          "type": "registry:component",
+          "target": "@components/hardware/rotary-knob.tsx"
+        }
+      ],
+      "meta": {
+        "sounds": [
+          "knob.tick"
+        ]
+      }
+    },
+    {
       "name": "button",
       "type": "registry:ui",
       "title": "Button",
