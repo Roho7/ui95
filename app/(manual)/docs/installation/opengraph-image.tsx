@@ -1,7 +1,7 @@
-import { GUIDE_PAGES } from "@/lib/docs/pages"
+import { GUIDE } from "@/lib/docs/pages"
 import { OG_SIZE, renderOgImage } from "@/lib/og/render-og-image"
 
-const PAGE = GUIDE_PAGES[1]
+const PAGE = GUIDE.installation
 
 export const alt = `${PAGE.title}: ${PAGE.description}`
 export const size = OG_SIZE
