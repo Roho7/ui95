@@ -101,9 +101,22 @@ The homepage's primary install action is not a CLI command. An "Installation pro
 
 SPEC-01 owns the light, molded, modern pocket-instrument look, and it reinterprets every standard control. UI95 should not chase that breadth. SPEC-01 reached 61 components in about two days, so a race on count is one UI95 loses (inference from the repo's creation date).
 
-Hardware95's lane is the hi-fi and lab gear of the 70s to 90s, rendered so it looks real. Think of brushed aluminium faceplates, knurled machined knobs, VU meters behind glass, chrome bat-handle toggles, piano-key tape transport buttons and glowing segment readouts. Each one has a material, takes light from one direction, casts a shadow and answers a press or a turn with travel, a click and a sound. It is not flat pixel art. The pixel look stays with the classic library.
+Hardware95's lane is the computers, lab instruments and studio gear of the 70s and 80s, rendered so they look real. Think of beige and putty plastic housings, black pointer knobs over printed scales, square lit push-buttons, VU meters with warm paper faces, round green-phosphor CRTs and glass pilot lamps. Each part has a matte material, takes light from one direction, casts a soft shadow and answers a press or a turn with travel, a click and a sound. It is not flat pixel art, and it is not polished metal. The pixel look stays with the classic library. The [aesthetic](#aesthetic) section below sets the visual rules.
 
 The second difference is scope. The classic library already covers standard controls. Hardware95 items are controls with no good web equivalent, the kind someone installs because they want that one tactile thing in an otherwise normal app.
+
+## Aesthetic
+
+Hardware95 looks like the beige-box computers, lab instruments and studio panels of the 70s and 80s. Five reference images set the bar: a flat lay of beige computers and peripherals, a cream numpad with coral and slate keys, a khaki studio plugin panel with lit mute and solo buttons, a worn grey control panel with a VU meter and a pointer knob, and a beige oscilloscope with a green CRT trace. Every part follows these rules.
+
+- **Materials.** Matte, slightly textured beige, putty, cream, khaki and warm-grey plastic and painted steel. No brushed or polished metal, chrome, steel gradients or shiny highlight sweeps.
+- **Palette.** Off-white, beige, putty and khaki bodies. Charcoal or near-black recesses, bezels and knob caps. Accents are muted signal red or coral, amber or yellow, phosphor green and an occasional slate blue-grey key. Colors are warm and a little faded, never neon.
+- **Forms.** Chunky rounded-rectangle housings with soft bevels and visible panel seams. Screens and wells sit recessed behind dark bezels. Keycaps are sculpted, with a dished top, side walls and a slight shadow. Knobs are black, skirted or pointer-shaped, with a white indicator line over a printed tick scale. Other parts include big square lit push-buttons with backlit legends, round pilot lamps with a glass lens and a glow, VU meters with warm-lit paper faces, CRTs with curved glass, a phosphor glow and a soft reflection, and jacks, screws and vent slots.
+- **Type.** Legends, small labels, tick numbers and model badges are condensed sans caps in a Helvetica or DIN style, printed onto the enclosure.
+- **Light and depth.** Soft studio light comes from the top-left. Parts cast a gentle ambient shadow, and recesses carry a subtle inner shadow. Faint grain or wear is fine. Depth comes from bevels and shadow, never from reflections.
+- **Interaction.** Keys and buttons travel down and shade when pressed, lit buttons glow when active, knobs turn with the pointer and click at detents, and lamps bloom.
+
+Every color, bevel and shadow recipe is a token in the `[data-hw]` scope, so all parts share one material system: `--hw-body*` for housings, `--hw-recess*` for wells and bezels, `--hw-legend` for print, `--hw-red`, `--hw-amber`, `--hw-green` and `--hw-slate` with `-lit` glow variants for accents, `--hw-bevel-*` and `--hw-shadow-*` for depth, and `--hw-grain` for texture. #9 defines them.
 
 ## Keep, change, add
 
@@ -116,7 +129,7 @@ The second difference is scope. The classic library already covers standard cont
 ### Change
 
 - **Hardware95 has its own visual rules.** The classic rules (four inks, no alpha, no gradients, square corners, stepped motion) do not apply to it. Hardware95 uses one light source from the top-left, layered shadows that agree with it, materials built from gradients and highlights, and motion that behaves like the physical part. A knob cap follows the pointer with no easing, a needle swings and settles, a key travels down and springs back, and an LED switches on at once.
-- **Hardware95 has one accent.** A `--hw-lamp` token colors lit LEDs and the red button. Everything else is material: metal, plastic, glass and paint.
+- **Hardware95 has a small accent set.** Signal red, amber, phosphor green and slate blue, all muted, color lamps, lit buttons and keys. Everything else is matte plastic, painted steel and glass.
 - **Hardware95 must not take over the host app's theme.** SPEC-01 scopes everything under one root attribute. That lets a developer drop one knob into a stock shadcn app. Every Hardware95 part carries its own scoped tokens and has no dependency on `theme`.
 - **`check-style.mjs` splits by line.** The classic class rules apply to classic directories only. Hardware95 items get their own checks, which say that they depend on `@ui95/hardware` and never on `@ui95/theme`.
 - **The base refusal moves from per URL to per item.** Hardware95 items will not import `radix-ui`, so they can serve `base-*` projects too. The route should refuse only items that need Radix.
@@ -125,7 +138,7 @@ The second difference is scope. The classic library already covers standard cont
 
 ### Add
 
-- A `hardware` foundation item: scoped tokens, a `Faceplate` in a few finishes and a `Lamp` LED.
+- A `hardware` foundation item: the shared tokens below, a plastic `Faceplate` in a few finishes and a pilot `Lamp`.
 - One shared rotary-input hook (pointer drag, wheel, arrow keys, `role="slider"` with `aria-valuenow`). It ships with `rotary-knob` first and moves to a shared file when `rotary-dial` becomes its second caller. `attachSoundSlots` already turns `aria-valuenow` changes into detent ticks for `slider`, so a knob gets its sound by mapping one more `data-slot`.
 - A `haptics` lib item wired to the same slot events as sound, with the same opt-in model. The browser technique is public (Vibration API, and the iOS 18 switch-input haptic). Write UI95's own implementation.
 - Devices: blocks that compose Hardware95 parts into a working mini-app on a faceplate with a model plate, published as `registry:block` with their own page. The first is a tape deck.
@@ -152,9 +165,9 @@ Details:
 
 Seven controls, drawn from the roadmap's special list where they overlap. Each one is a single PR with its registry item, demo, sounds, roadmap tick and screenshots. Each must look like a photographed part at rest and feel like one under the pointer.
 
-1. **`rotary-knob`.** A machined aluminium knob with a knurled grip over a printed scale. It turns by drag, wheel or arrow keys. The lighting on the cap stays put while the grip and the pointer line turn, and each step clicks.
+1. **`rotary-knob`.** A matte charcoal plastic knob with a white indicator line over a scale printed on the faceplate, as a skirted knob or a pointer knob. It turns by drag, wheel or arrow keys, and each step clicks.
 2. **`rotary-dial`.** A rotating stepped selector, a knob with detents over printed positions. It clicks from stop to stop, snaps to the nearest stop on release and plays a heavier click than the knob.
-3. **`lever-switch`.** A chrome bat-handle toggle that snaps between ON and OFF, with an optional flip-up safety cover.
+3. **`lever-switch`.** A bat-handle toggle in a dark bezel that snaps between ON and OFF, with an optional flip-up safety cover.
 4. **`radial-meter`.** A VU meter behind glass with a backlit cream scale. The needle swings toward the value, overshoots a little and settles.
 5. **`segment-display`.** A seven-segment readout behind a smoked window, with faint unlit segments and a glow on lit ones.
 6. **`tape-buttons`.** A row of piano-key transport keys with a mechanical interlock. Pressing one latches it down and pops the others up. It covers the roadmap's `radio-buttons` too.
@@ -204,7 +217,7 @@ Each step is one small PR that ships on its own and passes `npm run verify`. Com
 
 **Phase 1: foundation**
 
-2. The `hardware` item. It adds the `hardware` category to the docs generator and a Hardware95 sidebar group, the `check-style.mjs` split, scoped tokens, `Faceplate` and `Lamp`, with a showcase demo.
+2. The `hardware` item. It adds the `hardware` category to the docs generator and a Hardware95 sidebar group, the `check-style.mjs` split, the shared tokens, `Faceplate`, `Legend` and `Lamp`, with a showcase demo.
 3. `rotary-knob`, with the rotary-input hook and a detent sound.
 
 **Phase 2: first components**
