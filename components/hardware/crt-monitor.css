@@ -50,8 +50,10 @@
 
 [data-part="monitor-chin"] {
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
-  gap: 18px;
+  justify-content: flex-end;
+  gap: 12px 18px;
   padding: 0 6px;
 }
 
@@ -115,6 +117,21 @@
   100% {
     transform: scale(1, 1);
     filter: brightness(var(--hw-brightness, 1));
+  }
+}
+
+@media (max-width: 640px) {
+  [data-part="monitor"] {
+    padding: 16px 16px 14px;
+    border-radius: 20px;
+  }
+
+  [data-part="monitor-bezel"] {
+    padding: 12px;
+  }
+
+  [data-part="monitor-vents"] {
+    display: none;
   }
 }
 
