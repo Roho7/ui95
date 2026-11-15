@@ -37,7 +37,7 @@ function SiteMenubar({ guides, sections }: SiteMenubarProps) {
         <MenubarTrigger>Components</MenubarTrigger>
         <MenubarContent>
           <MenubarItem asChild>
-            <Link href="/components">Browse all</Link>
+            <Link href="/ui">Browse all</Link>
           </MenubarItem>
           <MenubarSeparator />
           {sections.map((section) => (

@@ -25,7 +25,7 @@ export const GUIDE_PAGES: DocPage[] = [
     description: "How to make your app look like this.",
   },
   {
-    href: "/docs/theming",
+    href: "/ui/theming",
     title: "Theming",
     description: "There are different kinds of retro vibes.",
   },

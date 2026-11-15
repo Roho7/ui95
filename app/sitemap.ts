@@ -34,7 +34,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
   const home = lastCommitDate(["app/page.tsx", "app/_demo"]) ?? LATEST_REGISTRY_DATE
   return [
     { url: absoluteUrl("/"), lastModified: home, changeFrequency: "weekly", priority: 1 },
-    { url: absoluteUrl("/components"), lastModified: LATEST_REGISTRY_DATE, changeFrequency: "weekly", priority: 0.9 },
+    { url: absoluteUrl("/ui"), lastModified: LATEST_REGISTRY_DATE, changeFrequency: "weekly", priority: 0.9 },
     ...GUIDE_PAGES.map((page) => ({
       url: absoluteUrl(page.href),
       lastModified: guideDate(page.href),

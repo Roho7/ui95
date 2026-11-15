@@ -35,7 +35,7 @@ function Taskbar({ onShutDown, maxVisibleTasks, children }: TaskbarProps) {
           <>
             <DropdownMenuItem onSelect={() => setIsAboutOpen(true)}>About UI95</DropdownMenuItem>
             <DropdownMenuItem asChild>
-              <Link href="/components">Components</Link>
+              <Link href="/ui">Components</Link>
             </DropdownMenuItem>
             <DropdownMenuItem asChild>
               <Link href="/docs">Docs</Link>

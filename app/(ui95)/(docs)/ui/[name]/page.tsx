@@ -117,8 +117,8 @@ export default async function ItemPage({ params }: ItemPageProps) {
           path: href,
           updatedAt: doc.updatedAt ?? undefined,
           crumbs: [
-            { name: "Components", path: "/components" },
-            { name: SECTION_LABELS[doc.section], path: "/components" },
+            { name: "Components", path: "/ui" },
+            { name: SECTION_LABELS[doc.section], path: "/ui" },
             { name: doc.title, path: href },
           ],
         })}
@@ -134,7 +134,7 @@ export default async function ItemPage({ params }: ItemPageProps) {
             <BreadcrumbSeparator />
             <BreadcrumbItem>
               <BreadcrumbLink asChild>
-                <Link href="/components">{SECTION_LABELS[doc.section]}</Link>
+                <Link href="/ui">{SECTION_LABELS[doc.section]}</Link>
               </BreadcrumbLink>
             </BreadcrumbItem>
             <BreadcrumbSeparator />

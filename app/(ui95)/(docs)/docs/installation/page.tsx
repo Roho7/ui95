@@ -45,7 +45,7 @@ export default function InstallationPage() {
       <DocSection id="theme" title="Add the theme">
         <p className="max-w-3xl text-xl leading-tight">
           Every component reads the theme tokens, so add it first. The{" "}
-          <ProseLink href="/docs/theming">theming guide</ProseLink> covers fonts and palettes.
+          <ProseLink href="/ui/theming">theming guide</ProseLink> covers fonts and palettes.
         </p>
         <InstallCommand name="theme" />
       </DocSection>

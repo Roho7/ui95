@@ -20,10 +20,18 @@ const nextConfig: NextConfig = {
       permanent: true,
     }))
     const hardwarePages = HARDWARE_NAMES.map((name) => ({ source: `/components/${name}`, destination: `/hardware/${name}`, permanent: true }))
-    return [...legacyHosts, ...hardwarePages]
+    const ui95Pages = [
+      { source: "/components", destination: "/ui", permanent: true },
+      { source: "/components/:name", destination: "/ui/:name", permanent: true },
+      { source: "/docs/theming", destination: "/ui/theming", permanent: true },
+    ]
+    return [...legacyHosts, ...hardwarePages, ...ui95Pages]
   },
   async rewrites() {
-    return [{ source: "/components/:name.md", destination: "/md/components/:name" }]
+    return [
+      { source: "/ui/:name.md", destination: "/md/components/:name" },
+      { source: "/hardware/:name.md", destination: "/md/components/:name" },
+    ]
   },
 }
 

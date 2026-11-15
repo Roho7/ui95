@@ -1,6 +1,7 @@
 import { registryDocToMarkdown } from "@/lib/docs/markdown"
 import { DOC_GROUPS } from "@/lib/docs/pages"
 import { findDoc } from "@/lib/docs/registry-docs"
+import { docHref } from "@/lib/docs/routes"
 import type { RegistryDoc } from "@/lib/docs/types"
 import {
   absoluteUrl,
@@ -12,9 +13,7 @@ import {
   SOURCE_URL,
 } from "@/lib/site"
 
-const COMPONENT_PREFIX = "/components/"
-
-const DOC_PREFIXES = [COMPONENT_PREFIX, "/hardware/"]
+const DOC_PREFIXES = ["/ui/", "/hardware/"]
 
 function docForHref(href: string): RegistryDoc | undefined {
   const prefix = DOC_PREFIXES.find((candidate) => href.startsWith(candidate))
@@ -22,7 +21,7 @@ function docForHref(href: string): RegistryDoc | undefined {
 }
 
 export function markdownUrl(name: string): string {
-  return absoluteUrl(`${COMPONENT_PREFIX}${name}.md`)
+  return absoluteUrl(`${docHref(name)}.md`)
 }
 
 function header(): string[] {

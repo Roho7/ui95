@@ -13,7 +13,7 @@
 
 ## How to get to it (user POV)
 
-- `/components`, card `CTA Button` (`article#cta-button`): sizes, disabled, as link (`Get started`) and the glint preset hero (`Get UI95`).
+- `/ui`, card `CTA Button` (`#cta-button`): sizes, disabled, as link (`Get started`) and the glint preset hero (`Get UI95`).
 
 ## Driving it with dither.mjs
 

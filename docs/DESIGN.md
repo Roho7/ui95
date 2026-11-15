@@ -142,7 +142,7 @@ type ShowcaseDemo = {
 
 Every page is generated from `registry.json` and the source files, so nothing is written per component.
 
-- `/` the retro desktop landing (About, Setup, Builder, install terminal and the toy windows), `/docs`, `/docs/installation` and `/docs/theming` the only hand-written prose, `/components` the catalogue, `/components/[name]` one page per item, plus `/llms.txt`, `/sitemap.xml` and `/robots.txt`.
+- `/` the retro desktop landing (About, Setup, Builder, install terminal and the toy windows), `/docs`, `/docs/installation` and `/ui/theming` the only hand-written prose, `/ui` the UI95 catalogue, `/ui/[name]` one page per item, `/hardware` and `/hardware/[name]` the Hardware95 side, plus `/llms.txt`, `/sitemap.xml` and `/robots.txt`.
 - The generator maps `registry:ui` to components, `registry:block` to blocks and `registry:lib` to utilities (`registry:style` is the theming guide). Props come from the TypeScript compiler API over the item files, defaults from the parameter destructuring or the cva `defaultVariants`.
 - `lib/docs/pages.ts` flattens the sidebar groups once; the sidebar, search, prev/next, sitemap and `llms.txt` all read that list.
 - Install commands use `npx shadcn@latest add ${SITE_URL}/r/<name>.json`, with `SITE_URL` from `NEXT_PUBLIC_SITE_URL` or Vercel's production host.
