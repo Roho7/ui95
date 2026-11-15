@@ -46,15 +46,14 @@ export function useWindowDrag(initialPosition: Point): WindowDrag {
     event.preventDefault()
     stopRef.current?.()
     const pixel = readPixel()
-    const grab = {
-      x: event.clientX - positionRef.current.x,
-      y: event.clientY - positionRef.current.y,
-    }
+    const windowElement = event.currentTarget.closest<HTMLElement>("[data-slot='window']") ?? event.currentTarget
+    const scale = windowElement.offsetWidth > 0 ? windowElement.getBoundingClientRect().width / windowElement.offsetWidth : 1
+    const origin = { x: event.clientX, y: event.clientY, position: positionRef.current }
 
     function trackPointer(moveEvent: PointerEvent) {
       const next = {
-        x: snapToPixel(moveEvent.clientX - grab.x, pixel),
-        y: snapToPixel(moveEvent.clientY - grab.y, pixel),
+        x: snapToPixel(origin.position.x + (moveEvent.clientX - origin.x) / scale, pixel),
+        y: snapToPixel(origin.position.y + (moveEvent.clientY - origin.y) / scale, pixel),
       }
       positionRef.current = next
       setPosition(next)
