@@ -230,7 +230,7 @@ function findRoadmapViolations() {
   return violations
 }
 
-const HARDWARE_CHROME_DIRS = ["app/(hardware)/", "components/chrome/hardware/"]
+const HARDWARE_CHROME_DIRS = ["app/(hardware)/", "components/chrome/hardware/", "app/(manual)/", "components/chrome/manual/"]
 const HARDWARE_CHROME_BLOCKED = ["@/components/ui/", "@/components/retro/", "@/app/_", "@/components/showcase/", "@/components/docs/"]
 const HARDWARE_CHROME_ALLOWED = new Set(["@/components/showcase/demos.generated", "@/components/docs/use-package-manager", "@/components/docs/JsonLd"])
 
@@ -238,9 +238,10 @@ function findHardwareChromeViolations(file, text) {
   if (!HARDWARE_CHROME_DIRS.some((directory) => file.startsWith(directory))) {
     return []
   }
-  return listImports(text)
+  return [...text.matchAll(/^import\s[^;]*?from\s+["']([^"']+)["']/gm)]
+    .map((match) => match[1])
     .filter((specifier) => HARDWARE_CHROME_BLOCKED.some((prefix) => specifier.startsWith(prefix)) && !HARDWARE_CHROME_ALLOWED.has(specifier))
-    .map((specifier) => ({ path: file, line: 0, rule: "hardware-chrome-skips-win95", found: specifier, why: "Hardware95 pages never render Win95 chrome or primitives; use components/hardware and components/chrome/hardware" }))
+    .map((specifier) => ({ path: file, line: 0, rule: "chrome-skips-win95", found: specifier, why: "Hardware95 and manual pages never render Win95 chrome or primitives; use components/hardware or components/chrome" }))
 }
 
 function isHardwareFile(file) {
