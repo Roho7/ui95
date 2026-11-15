@@ -31,6 +31,7 @@ This directory is the maintained source for verifying the user-facing behavior o
 | Rotary knob (Hardware95) | [rotary-knob.md](rotary-knob.md) | `journey rotary-knob` |
 | Hardware95 chrome and the library split | [hardware-chrome.md](hardware-chrome.md) | `journey hardware-chrome` |
 | Legacy URL redirects | [legacy-urls.md](legacy-urls.md) | `journey legacy-urls` |
+| CRT monitor (Hardware95) | journeys/crt-monitor.mjs | `journey crt-monitor` |
 | Operator's manual (`/docs`) | [manual.md](manual.md) | `journey manual` |
 | CTA keycap button | [cta-button.md](cta-button.md) | `journey cta-button` |
 | Retro desktop landing (`/`) | [retro-desktop.md](retro-desktop.md) | `journey desktop` |
