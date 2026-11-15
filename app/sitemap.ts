@@ -2,7 +2,7 @@ import { execFileSync } from "node:child_process"
 
 import type { MetadataRoute } from "next"
 
-import { GUIDE_PAGES } from "@/lib/docs/pages"
+import { GUIDE } from "@/lib/docs/pages"
 import { REGISTRY_DOCS } from "@/lib/docs/registry-docs"
 import { docHref } from "@/lib/docs/routes"
 import { absoluteUrl } from "@/lib/site"
@@ -27,7 +27,7 @@ function lastCommitDate(paths: readonly string[]): string | undefined {
 }
 
 function guideDate(href: string): string | undefined {
-  return lastCommitDate([`app/(ui95)/(docs)${href}/page.tsx`]) ?? LATEST_REGISTRY_DATE
+  return lastCommitDate([`app/(ui95)/(docs)${href}/page.tsx`, `app/(manual)${href}/page.tsx`]) ?? LATEST_REGISTRY_DATE
 }
 
 export default function sitemap(): MetadataRoute.Sitemap {
@@ -35,7 +35,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
   return [
     { url: absoluteUrl("/"), lastModified: home, changeFrequency: "weekly", priority: 1 },
     { url: absoluteUrl("/ui"), lastModified: LATEST_REGISTRY_DATE, changeFrequency: "weekly", priority: 0.9 },
-    ...GUIDE_PAGES.map((page) => ({
+    ...Object.values(GUIDE).map((page) => ({
       url: absoluteUrl(page.href),
       lastModified: guideDate(page.href),
       changeFrequency: "monthly" as const,

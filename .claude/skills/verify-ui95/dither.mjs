@@ -23,7 +23,7 @@ const THEMES = PALETTES.flatMap(({ slug, label }) => [
 ])
 const ROUTES = [
   { path: "/", minWidth: 0, label: "home", hasCells: false },
-  { path: "/docs", minWidth: 0, label: "docs", hasCells: false },
+  { path: "/ui/about", minWidth: 0, label: "about", hasCells: false },
   { path: "/ui", minWidth: 0, label: "components", hasCells: true },
   { path: "/ui/button", minWidth: 0, label: "button", hasCells: true },
   { path: "/ui/window", minWidth: 0, label: "window", hasCells: true },
